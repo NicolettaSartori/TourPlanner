@@ -18,3 +18,4 @@ C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlanner.pdb
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlanner.genruntimeconfig.cache
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\ref\TourPlanner.dll
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlanner.sourcelink.json
