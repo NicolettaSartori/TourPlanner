@@ -43,6 +43,27 @@
             </Setter>
         </Style>
         <!-- Tab -->
+        <Style x:Key="HeaderButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="CornflowerBlue"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="12"
+                                BorderThickness="0"
+                                BorderBrush="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="TabControl">
             <Setter Property="BorderThickness" Value="0 3 0 0"/>
             <Setter Property="BorderBrush" Value="CornflowerBlue"/>
@@ -51,15 +72,24 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="TabControl">
                         <Grid>
-                            <!-- Define row layout for tabs and content -->
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>  <!-- Tab headers -->
-                                <RowDefinition Height="*"/>    <!-- Tab content -->
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TabPanel Grid.Row="0" Background="White" IsItemsHost="True"/>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Button Content="+" Style="{StaticResource HeaderButtonStyle}"/>
+                                    <Button Content="-" Style="{StaticResource HeaderButtonStyle}"/>
+                                    <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
+                                </StackPanel>
+                            </Grid>
 
-                            <!-- Content Area (Inside Border) -->
                             <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
                                 <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
                                     <ContentPresenter ContentSource="SelectedContent"/>
@@ -110,28 +140,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="HeaderButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="24"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="Margin" Value="2,0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Background" Value="CornflowerBlue"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                        CornerRadius="12"
-                        BorderThickness="0"
-                        BorderBrush="Transparent">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </Window.Resources>
     <StackPanel>
         <Grid>
@@ -209,15 +217,6 @@
                         </Border>
                 </TabItem>
             </TabControl>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="120,-46,0,0">
-                        <Button Content="+" Style="{StaticResource HeaderButtonStyle}"/>
-                        <Button Content="-" Style="{StaticResource HeaderButtonStyle}"/>
-                        <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
             <TabControl Grid.Row="0" Grid.Column="1">
                 <TabItem Header="General">
                     <Label Content="Hier sind tolle Infos" Padding="3" Margin="8"/>

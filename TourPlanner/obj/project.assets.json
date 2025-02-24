@@ -8,19 +8,19 @@
     "net9.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\nico_privat\\.nuget\\packages\\": {}
+    "/Users/nico_privat/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Mac\\Home\\Documents\\FH\\4-Semester\\SWEN\\TourPlanner\\TourPlanner\\TourPlanner.csproj",
+      "projectUniqueName": "/Users/nico_privat/Documents/FH/4-Semester/SWEN/TourPlanner/TourPlanner/TourPlanner.csproj",
       "projectName": "TourPlanner",
-      "projectPath": "C:\\Mac\\Home\\Documents\\FH\\4-Semester\\SWEN\\TourPlanner\\TourPlanner\\TourPlanner.csproj",
-      "packagesPath": "C:\\Users\\nico_privat\\.nuget\\packages\\",
-      "outputPath": "C:\\Mac\\Home\\Documents\\FH\\4-Semester\\SWEN\\TourPlanner\\TourPlanner\\obj\\",
+      "projectPath": "/Users/nico_privat/Documents/FH/4-Semester/SWEN/TourPlanner/TourPlanner/TourPlanner.csproj",
+      "packagesPath": "/Users/nico_privat/.nuget/packages/",
+      "outputPath": "/Users/nico_privat/Documents/FH/4-Semester/SWEN/TourPlanner/TourPlanner/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\nico_privat\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/nico_privat/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0-windows"
@@ -43,8 +43,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.200"
+      }
     },
     "frameworks": {
       "net9.0-windows7.0": {
@@ -68,7 +67,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\nico_privat\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/nico_privat/.dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
