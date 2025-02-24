@@ -46,6 +46,29 @@
         <Style TargetType="TabControl">
             <Setter Property="BorderThickness" Value="0 3 0 0"/>
             <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <!-- Define row layout for tabs and content -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>  <!-- Tab headers -->
+                                <RowDefinition Height="*"/>    <!-- Tab content -->
+                            </Grid.RowDefinitions>
+
+                            <TabPanel Grid.Row="0" Background="White" IsItemsHost="True"/>
+
+                            <!-- Content Area (Inside Border) -->
+                            <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
+                                <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
+                                    <ContentPresenter ContentSource="SelectedContent"/>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         
         <Style TargetType="TabItem">
@@ -136,7 +159,6 @@
                 <TextBox Text="Search" Padding="3" BorderThickness="0" Grid.Column="0"/>
                 <Button Content="🔎" Padding="3" Background="White" BorderThickness="0" Grid.Column="1"/>
             </Grid>
-
         </Border>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -149,7 +171,6 @@
             </Grid.RowDefinitions>
             <TabControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
                 <TabItem Header="Tours">
-                    <Border BorderThickness="1 0 1 1" BorderBrush="Gray">
                         <Border Margin="8" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -186,7 +207,6 @@
                                 </Border>
                             </Grid>
                         </Border>
-                    </Border>
                 </TabItem>
             </TabControl>
             <TabItem>
@@ -200,62 +220,54 @@
             </TabItem>
             <TabControl Grid.Row="0" Grid.Column="1">
                 <TabItem Header="General">
-                    <Border BorderThickness="1 0 1 1" BorderBrush="Gray">
-                        <Label Content="Hier sind tolle Infos" Padding="3" Margin="8"/>
-                    </Border>
+                    <Label Content="Hier sind tolle Infos" Padding="3" Margin="8"/>
                 </TabItem>
                 <TabItem Header="Route">
-                    <Border BorderThickness="1 0 1 1" BorderBrush="Gray">
-                        <Rectangle MinHeight="100" Fill="SandyBrown" Stroke="Black" Margin="8"/>
-                    </Border>
+                    <Rectangle MinHeight="100" Fill="SandyBrown" Stroke="Black" Margin="8"/>
                 </TabItem>
                 <TabItem Header="Misc">
-                    <Border BorderThickness="1 0 1 1" BorderBrush="Gray">
-                        <Label Content="Lorem Ipsum" Padding="3" Margin="8"/>
-                    </Border>
+                    <Label Content="Lorem Ipsum" Padding="3" Margin="8"/>
                 </TabItem>
             </TabControl>
             <TabControl Grid.Row="1" Grid.Column="1">
                 <TabItem Header="Tour Logs">
-                    <Border BorderThickness="1 0 1 1" BorderBrush="Gray">
-                        <DataGrid ItemsSource="{Binding TableData}"
-                                  AutoGenerateColumns="False"
-                                  AlternatingRowBackground="#ffedf1"
-                                  RowBackground="White"
-                                  HeadersVisibility="Column"
-                                  Background="White"
-                                  BorderThickness="1" BorderBrush="LightPink"
-                                  GridLinesVisibility="All"
-                                  HorizontalGridLinesBrush="LightPink" VerticalGridLinesBrush="LightPink"
-                                  Margin="8">
-                            <DataGrid.Resources>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="BorderBrush" Value="#ffedf1"/>
-                                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                                    <Setter Property="Background" Value="LightPink"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                    <Setter Property="Padding" Value=" 5"/>
-                                </Style>
-                            </DataGrid.Resources>
-    
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>
-                                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="*"/>
-                                <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="*">
-                                    <DataGridTextColumn.HeaderStyle>
-                                        <Style TargetType="DataGridColumnHeader">
-                                            <Setter Property="Background" Value="LightPink"/>
-                                            <Setter Property="Foreground" Value="White"/>
-                                            <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="Padding" Value=" 5"/> 
-                                            <Setter Property="BorderThickness" Value="0,0,0,0"/>
-                                        </Style>
-                                    </DataGridTextColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Border>
+                    <DataGrid ItemsSource="{Binding TableData}"
+                              AutoGenerateColumns="False"
+                              AlternatingRowBackground="#ffedf1"
+                              RowBackground="White"
+                              HeadersVisibility="Column"
+                              Background="White"
+                              BorderThickness="1" BorderBrush="LightPink"
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="LightPink" VerticalGridLinesBrush="LightPink"
+                              Margin="8">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="BorderBrush" Value="#ffedf1"/>
+                                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                                <Setter Property="Background" Value="LightPink"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Padding" Value=" 5"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="*"/>
+                            <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="*">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="LightPink"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Padding" Value=" 5"/> 
+                                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </TabItem>
             </TabControl>
         </Grid>
