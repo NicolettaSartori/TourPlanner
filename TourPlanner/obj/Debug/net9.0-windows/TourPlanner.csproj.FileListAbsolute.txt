@@ -19,3 +19,6 @@ C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlanner.genruntimeconfig.cache
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\ref\TourPlanner.dll
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlanner.sourcelink.json
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\Views\Navbar.g.cs
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\Views\Navbar.baml

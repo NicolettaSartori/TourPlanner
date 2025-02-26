@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\App.xaml
-11407045341
+32064930292
 
-4615574151
+5-1063658312
 200-1393262731
-MainWindow.xaml;
+MainWindow.xaml;Styles\Main.xaml;Views\Navbar.xaml;
 
-False
+True
 

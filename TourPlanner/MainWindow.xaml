@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TourPlanner"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:views="clr-namespace:TourPlanner.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
         Title="Tour Planner" Height="450" Width="800">
@@ -13,35 +15,6 @@
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
         
-        <!-- Nav Button -->
-        <Style x:Key="NavElement" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Foreground" Value="DimGray"/>
-            
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Name="Border"
-                                Background="White"
-                                BorderBrush="DarkGray"
-                                BorderThickness="1,1,0,1"
-                                Padding="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <!-- Hover -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#e0edff"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="CornflowerBlue"/>
-                                <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Cursor" Value="Hand"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <!-- Tab -->
         <Style x:Key="HeaderButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="24"/>
@@ -64,10 +37,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="TabControl">
-            <Setter Property="BorderThickness" Value="0 3 0 0"/>
-            <Setter Property="BorderBrush" Value="CornflowerBlue"/>
-            
+        <Style x:Key="TabControlWithButtons" TargetType="TabControl">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabControl">
@@ -89,6 +59,29 @@
                                     <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
                                 </StackPanel>
                             </Grid>
+
+                            <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
+                                <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
+                                    <ContentPresenter ContentSource="SelectedContent"/>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="TabControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
 
                             <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
                                 <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
@@ -142,22 +135,9 @@
         </Style>
     </Window.Resources>
     <StackPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Content="File" Style="{StaticResource NavElement}" BorderThickness="0, 1, 0, 1" Grid.Column="0"/>
-            <Button Content="Edit" Style="{StaticResource NavElement}" Grid.Column="1"/>
-            <Button Content="Options" Style="{StaticResource NavElement}" Grid.Column="2"/>
-            <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="3"/>
-            <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="4"/>
-            <Button Content="Help" Style="{StaticResource NavElement}" Grid.Column="5"/>
-        </Grid>
+        <!-- Navbar -->
+        <views:Navbar />
+        
         <Border BorderThickness="0 0 0 1" BorderBrush="DarkGray">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -177,7 +157,7 @@
                 <RowDefinition Height="50*"/>
                 <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
-            <TabControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+            <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
                 <TabItem Header="Tours">
                         <Border Margin="8" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
@@ -228,7 +208,7 @@
                     <Label Content="Lorem Ipsum" Padding="3" Margin="8"/>
                 </TabItem>
             </TabControl>
-            <TabControl Grid.Row="1" Grid.Column="1">
+            <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="1" Grid.Column="1">
                 <TabItem Header="Tour Logs">
                     <DataGrid ItemsSource="{Binding TableData}"
                               AutoGenerateColumns="False"
