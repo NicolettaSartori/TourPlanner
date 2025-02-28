@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TourPlanner"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:views="clr-namespace:TourPlanner.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
@@ -151,7 +152,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Text="Search" Padding="3" BorderThickness="0" Grid.Column="0"/>
-                <Button Content="🔎" Padding="3" Background="White" BorderThickness="0" Grid.Column="1"/>
+                <Button Padding="3" Background="White" BorderThickness="0" Grid.Column="1">
+                    <fa:ImageAwesome Icon="Search" Height="13" Foreground="CornflowerBlue" RenderTransformOrigin="0.5,0.5">
+                        <fa:ImageAwesome.RenderTransform>
+                            <ScaleTransform ScaleX="-1"/>
+                        </fa:ImageAwesome.RenderTransform>
+                    </fa:ImageAwesome>
+                </Button>
             </Grid>
         </Border>
         <Grid>

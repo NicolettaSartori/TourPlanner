@@ -20,14 +20,6 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-        
-        <!-- <Button Content="File" BorderThickness="0, 1, 0, 1" Grid.Column="0"/> -->
-        <!-- <Button Content="Edit" Grid.Column="1"/> -->
-        <!-- <Button Content="Options" Grid.Column="2"/> -->
-        <!-- <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="3"/> -->
-        <!-- <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="4"/> -->
-        <!-- <Button Content="Help" Grid.Column="5"/> -->
-        
         <ItemsControl ItemsSource="{Binding ProcessedMenuItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

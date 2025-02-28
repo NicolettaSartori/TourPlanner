@@ -23,3 +23,6 @@ C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\Views\Navbar.baml
 C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\Styles\Main.baml
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\bin\Debug\net9.0-windows\FontAwesome.WPF.dll
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlanner.csproj.AssemblyReference.cache
+C:\Mac\Home\Documents\FH\4-Semester\SWEN\TourPlanner\TourPlanner\obj\Debug\net9.0-windows\TourPlan.C0FA8D3D.Up2Date
