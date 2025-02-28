@@ -7,34 +7,18 @@
              mc:Ignorable="d"
              d:DesignHeight="25" d:DesignWidth="500">
     <UserControl.Resources>
-    <Style x:Key="NavElement" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Foreground" Value="DimGray"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Main.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Name="Border"
-                            Background="White"
-                            BorderBrush="DarkGray"
-                            BorderThickness="1,1,0,1"
-                            Padding="4">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Hover -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#e0edff"/>
-                            <Setter TargetName="Border" Property="BorderBrush" Value="CornflowerBlue"/>
-                            <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+                <Setter Property="Foreground" Value="DimGray"/>
+                <Setter Property="BorderBrush" Value="DarkGray"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderThickness" Value="1,1,0,1"/>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid>
@@ -47,11 +31,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
     
-        <Button Content="File" Style="{StaticResource NavElement}" BorderThickness="0, 1, 0, 1" Grid.Column="0"/>
-        <Button Content="Edit" Style="{StaticResource NavElement}" Grid.Column="1"/>
-        <Button Content="Options" Style="{StaticResource NavElement}" Grid.Column="2"/>
+        <Button Content="File" BorderThickness="0, 1, 0, 1" Grid.Column="0"/>
+        <Button Content="Edit" Grid.Column="1"/>
+        <Button Content="Options" Grid.Column="2"/>
         <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="3"/>
         <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="4"/>
-        <Button Content="Help" Style="{StaticResource NavElement}" Grid.Column="5"/>
+        <Button Content="Help" Grid.Column="5"/>
     </Grid>
 </UserControl>
