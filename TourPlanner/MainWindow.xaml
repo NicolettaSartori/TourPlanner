@@ -10,11 +10,6 @@
         d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
         Title="Tour Planner" Height="450" Width="800">
     <Window.Resources>
-        <!-- Button -->
-        <Style TargetType="Button" >
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-        
         <!-- Tab -->
         <Style x:Key="HeaderButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="24"/>
@@ -136,7 +131,18 @@
     </Window.Resources>
     <StackPanel>
         <!-- Navbar -->
-        <views:Navbar />
+        <views:Navbar>
+            <views:Navbar.MenuItems>
+                <x:Array Type="sys:String">
+                    <sys:String>File</sys:String>
+                    <sys:String>Edit</sys:String>
+                    <sys:String>Options</sys:String>
+                    <sys:String>""</sys:String>
+                    <sys:String>""</sys:String>
+                    <sys:String>Help</sys:String>
+                </x:Array>
+            </views:Navbar.MenuItems>
+        </views:Navbar>
         
         <Border BorderThickness="0 0 0 1" BorderBrush="DarkGray">
             <Grid>

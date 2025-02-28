@@ -20,22 +20,52 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-    
-        <Button Content="File" BorderThickness="0, 1, 0, 1" Grid.Column="0"/>
-        <Button Content="Edit" Grid.Column="1"/>
-        <Button Content="Options" Grid.Column="2"/>
-        <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="3"/>
-        <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="4"/>
-        <Button Content="Help" Grid.Column="5"/>
-    </Grid>
+        
+        <!-- <Button Content="File" BorderThickness="0, 1, 0, 1" Grid.Column="0"/> -->
+        <!-- <Button Content="Edit" Grid.Column="1"/> -->
+        <!-- <Button Content="Options" Grid.Column="2"/> -->
+        <!-- <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="3"/> -->
+        <!-- <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1" Grid.Column="4"/> -->
+        <!-- <Button Content="Help" Grid.Column="5"/> -->
+        
+        <ItemsControl ItemsSource="{Binding ProcessedMenuItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding CountColumns, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Button Content="{Binding}"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+
+                                <!-- Border -->
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding}" Value="">
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                        
+                        <ContentPresenter Content="{Binding}"/>
+                    </ContentControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 </UserControl>
