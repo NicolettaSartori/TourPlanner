@@ -8,10 +8,6 @@
              d:DesignHeight="25" d:DesignWidth="500">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Main.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            
             <Style TargetType="Button" BasedOn="{StaticResource ButtonBase}">
                 <Setter Property="Foreground" Value="DimGray"/>
                 <Setter Property="BorderBrush" Value="DarkGray"/>

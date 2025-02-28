@@ -5,131 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TourPlanner"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:views="clr-namespace:TourPlanner.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
         Title="Tour Planner" Height="450" Width="800">
-    <Window.Resources>
-        <!-- Tab -->
-        <Style x:Key="HeaderButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="24"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="Margin" Value="2,0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Background" Value="CornflowerBlue"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="12"
-                                BorderThickness="0"
-                                BorderBrush="Transparent">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TabControlWithButtons" TargetType="TabControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabControl">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Button Content="+" Style="{StaticResource HeaderButtonStyle}"/>
-                                    <Button Content="-" Style="{StaticResource HeaderButtonStyle}"/>
-                                    <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
-                                </StackPanel>
-                            </Grid>
-
-                            <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
-                                <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
-                                    <ContentPresenter ContentSource="SelectedContent"/>
-                                </Border>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <Style TargetType="TabControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabControl">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
-
-                            <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
-                                <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
-                                    <ContentPresenter ContentSource="SelectedContent"/>
-                                </Border>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <Style TargetType="TabItem">
-            <Setter Property="Foreground" Value="DimGray"/>
-            <Setter Property="MinWidth" Value="70"/>
-            
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Border Name="BorderTab"
-                                BorderBrush="DimGray"
-                                BorderThickness="1 1 1 0"
-                                Padding="12 4"
-                                Margin="0 0 4 0">
-                            <ContentPresenter ContentSource="Header" HorizontalAlignment="Center"/>
-                        </Border>
-                        
-                        <ControlTemplate.Triggers>
-                            <!-- Aktive Tab -->
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="BorderTab" Property="Background" Value="CornflowerBlue"/>
-                                <Setter TargetName="BorderTab" Property="BorderBrush" Value="CornflowerBlue"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-
-                            <!-- Hovered Tab -->
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                    <Condition Property="IsSelected" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="BorderTab" Property="Background" Value="#e0edff"/>
-                                <Setter TargetName="BorderTab" Property="BorderBrush" Value="CornflowerBlue"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Cursor" Value="Hand"/>
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
     <StackPanel>
         <!-- Navbar -->
         <views:Navbar>
@@ -145,22 +24,11 @@
             </views:Navbar.MenuItems>
         </views:Navbar>
         
+        <!-- Search -->
         <Border BorderThickness="0 0 0 1" BorderBrush="DarkGray">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/> 
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Text="Search" Padding="3" BorderThickness="0" Grid.Column="0"/>
-                <Button Padding="3" Background="White" BorderThickness="0" Grid.Column="1">
-                    <fa:ImageAwesome Icon="Search" Height="13" Foreground="CornflowerBlue" RenderTransformOrigin="0.5,0.5">
-                        <fa:ImageAwesome.RenderTransform>
-                            <ScaleTransform ScaleX="-1"/>
-                        </fa:ImageAwesome.RenderTransform>
-                    </fa:ImageAwesome>
-                </Button>
-            </Grid>
+            <views:InputWithButton />
         </Border>
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30*"/>
@@ -170,96 +38,30 @@
                 <RowDefinition Height="50*"/>
                 <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
+            
+            <!-- Left Tab -->
             <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
                 <TabItem Header="Tours">
-                        <Border Margin="8" BorderBrush="LightGray" BorderThickness="1">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                
-                                <ListBox Grid.Row="0" BorderThickness="0">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
-
-                                                <TextBlock Text="{Binding}" Padding="5" Grid.Row="0"/>
-                                                <Border Height="1" Background="LightGray" Grid.Row="1"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-
-                                    <ListBox.Items>
-                                        <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Wienerwald</sys:String>
-                                        <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Dopplerhütte</sys:String>
-                                        <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Figlwarte</sys:String>
-                                        <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Dorfrunde</sys:String>
-                                    </ListBox.Items>
-                                </ListBox>
-                                
-                                <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 1 0 0">
-                                    <TextBlock Text="Vestibulum at eros" HorizontalAlignment="Center" Padding="5" Foreground="Black"
-                                    />
-                                </Border>
-                            </Grid>
-                        </Border>
+                    <views:List />
                 </TabItem>
             </TabControl>
-            <TabControl Grid.Row="0" Grid.Column="1">
+            <!-- Right top Tab -->
+            <TabControl Grid.Row="0" Grid.Column="1" >
                 <TabItem Header="General">
                     <Label Content="Hier sind tolle Infos" Padding="3" Margin="8"/>
                 </TabItem>
                 <TabItem Header="Route">
-                    <Rectangle MinHeight="100" Fill="SandyBrown" Stroke="Black" Margin="8"/>
+                    <views:Map />
                 </TabItem>
                 <TabItem Header="Misc">
                     <Label Content="Lorem Ipsum" Padding="3" Margin="8"/>
                 </TabItem>
             </TabControl>
+            
+            <!-- Right bottom Tab -->
             <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="1" Grid.Column="1">
                 <TabItem Header="Tour Logs">
-                    <DataGrid ItemsSource="{Binding TableData}"
-                              AutoGenerateColumns="False"
-                              AlternatingRowBackground="#ffedf1"
-                              RowBackground="White"
-                              HeadersVisibility="Column"
-                              Background="White"
-                              BorderThickness="1" BorderBrush="LightPink"
-                              GridLinesVisibility="All"
-                              HorizontalGridLinesBrush="LightPink" VerticalGridLinesBrush="LightPink"
-                              Margin="8">
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="BorderBrush" Value="#ffedf1"/>
-                                <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                                <Setter Property="Background" Value="LightPink"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter Property="Padding" Value=" 5"/>
-                            </Style>
-                        </DataGrid.Resources>
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>
-                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="*"/>
-                            <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="*">
-                                <DataGridTextColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="Background" Value="LightPink"/>
-                                        <Setter Property="Foreground" Value="White"/>
-                                        <Setter Property="FontWeight" Value="Bold"/>
-                                        <Setter Property="Padding" Value=" 5"/> 
-                                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <views:DataGrid />
                 </TabItem>
             </TabControl>
         </Grid>
