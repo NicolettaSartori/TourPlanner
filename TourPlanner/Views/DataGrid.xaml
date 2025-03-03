@@ -3,19 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:TourPlanner.Views"
+             xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.DataContext>
+        <vm:DataGridViewModel />
+    </UserControl.DataContext>
+
     <DataGrid ItemsSource="{Binding TableData}"
-      AutoGenerateColumns="False"
-      AlternatingRowBackground="#ffedf1"
-      RowBackground="White"
-      HeadersVisibility="Column"
-      Background="White"
-      BorderThickness="1" BorderBrush="LightPink"
-      GridLinesVisibility="All"
-      HorizontalGridLinesBrush="LightPink" VerticalGridLinesBrush="LightPink"
-      Margin="8">
+              AutoGenerateColumns="False"
+              AlternatingRowBackground="#ffedf1"
+              RowBackground="White"
+              HeadersVisibility="Column"
+              Background="White"
+              BorderThickness="1" BorderBrush="LightPink"
+              GridLinesVisibility="All"
+              HorizontalGridLinesBrush="LightPink" VerticalGridLinesBrush="LightPink"
+              Margin="8">
+        
         <DataGrid.Resources>
             <Style TargetType="DataGridColumnHeader">
                 <Setter Property="BorderBrush" Value="#ffedf1"/>

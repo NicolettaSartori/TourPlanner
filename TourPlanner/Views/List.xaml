@@ -3,18 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:TourPlanner.Views"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="200">
+    
+    <UserControl.DataContext>
+        <vm:ListViewModel />
+    </UserControl.DataContext>
+
     <Border Margin="8" BorderBrush="LightGray" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
-            <ListBox Grid.Row="0" BorderThickness="0">
+         
+            <ListBox Grid.Row="0" BorderThickness="0" ItemsSource="{Binding Tours}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -28,18 +32,10 @@
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
-                <ListBox.Items>
-                    <system:String>Wienerwald</system:String>
-                    <system:String>Dopplerhütte</system:String>
-                    <system:String>Figlwarte</system:String>
-                    <system:String>Dorfrunde</system:String>
-                </ListBox.Items>
             </ListBox>
             
             <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 1 0 0">
-                <TextBlock Text="Vestibulum at eros" HorizontalAlignment="Center" Padding="5" Foreground="Black"
-                />
+                <TextBlock Text="Vestibulum at eros" HorizontalAlignment="Center" Padding="5" Foreground="Black"/>
             </Border>
         </Grid>
     </Border>

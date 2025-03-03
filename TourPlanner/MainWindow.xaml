@@ -6,27 +6,21 @@
         xmlns:local="clr-namespace:TourPlanner"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:views="clr-namespace:TourPlanner.Views"
+        xmlns:vm="clr-namespace:TourPlanner.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
         Title="Tour Planner" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+  
     <StackPanel>
         <!-- Navbar -->
-        <views:Navbar>
-            <views:Navbar.MenuItems>
-                <x:Array Type="sys:String">
-                    <sys:String>File</sys:String>
-                    <sys:String>Edit</sys:String>
-                    <sys:String>Options</sys:String>
-                    <sys:String>""</sys:String>
-                    <sys:String>""</sys:String>
-                    <sys:String>Help</sys:String>
-                </x:Array>
-            </views:Navbar.MenuItems>
-        </views:Navbar>
-        
+        <views:Navbar DataContext="{Binding NavbarVM}" />
         <!-- Search -->
         <Border BorderThickness="0 0 0 1" BorderBrush="DarkGray">
-            <views:InputWithButton />
+            <views:InputWithButton DataContext="{Binding InputVM}" />
+
         </Border>
         
         <Grid>
@@ -42,7 +36,7 @@
             <!-- Left Tab -->
             <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
                 <TabItem Header="Tours">
-                    <views:List />
+                    <views:List DataContext="{Binding ListVM}" />
                 </TabItem>
             </TabControl>
             <!-- Right top Tab -->
@@ -61,7 +55,7 @@
             <!-- Right bottom Tab -->
             <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="1" Grid.Column="1">
                 <TabItem Header="Tour Logs">
-                    <views:DataGrid />
+                    <views:DataGrid DataContext="{Binding DataGridVM}" />
                 </TabItem>
             </TabControl>
         </Grid>
