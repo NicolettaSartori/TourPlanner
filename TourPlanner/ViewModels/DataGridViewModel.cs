@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
@@ -18,9 +19,9 @@ namespace TourPlanner.ViewModels
             //Beispielsdaten
             TableData = new ObservableCollection<TourLog>
             {
-                new TourLog { Date = "2024-03-03", Duration = "2h 15m", Distance = "10 km" },
-                new TourLog { Date = "2024-03-04", Duration = "3h 00m", Distance = "15 km" },
-                new TourLog { Date = "2024-03-05", Duration = "1h 45m", Distance = "8 km" }
+                new TourLog { DateTime = DateTime.Parse("2024-03-03"), TotalTime = "2h 15m", TotalDistance = "10 km" },
+                new TourLog { DateTime = DateTime.Parse("2024-03-04"), TotalTime = "3h 00m", TotalDistance = "15 km" },
+                new TourLog { DateTime = DateTime.Parse("2024-03-05"), TotalTime = "1h 45m", TotalDistance = "8 km" }
             };
         }
 
@@ -29,12 +30,5 @@ namespace TourPlanner.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public class TourLog
-    {
-        public string Date { get; set; }
-        public string Duration { get; set; }
-        public string Distance { get; set; }
     }
 }
