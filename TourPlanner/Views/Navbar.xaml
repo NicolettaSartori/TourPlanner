@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:TourPlanner.ViewModels"
-             xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="25" d:DesignWidth="500">
 
@@ -23,19 +22,44 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal">
-        <ItemsControl ItemsSource="{Binding MenuItems}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding CountColumns}"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+    <ItemsControl ItemsSource="{Binding MenuItems}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Columns="{Binding CountColumns}"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Content="{Binding}" Command="{Binding DataContext.MenuItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </StackPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Button Content="{Binding}" Command="{Binding DataContext.MenuItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                            <!-- Border -->
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding}" Value="">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <Border BorderBrush="DarkGray" BorderThickness="1,1,0,1"/>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                    
+                    <ContentPresenter Content="{Binding}"/>
+                </ContentControl>
+              </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </UserControl>
