@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="25" d:DesignWidth="500">
-
     <UserControl.DataContext>
         <local:NavbarViewModel />
     </UserControl.DataContext>
