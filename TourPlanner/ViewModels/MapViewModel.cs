@@ -1,9 +1,6 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace TourPlanner.ViewModels
+﻿namespace TourPlanner.ViewModels
 {
-    public class MapViewModel : INotifyPropertyChanged
+    public class MapViewModel : ViewModelBase
     {
         private string _mapImagePath;
         public string MapImagePath
@@ -15,12 +12,6 @@ namespace TourPlanner.ViewModels
         public MapViewModel()
         {
             MapImagePath = "";
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

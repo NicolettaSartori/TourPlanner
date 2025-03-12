@@ -1,11 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class ListViewModel : INotifyPropertyChanged
+    public class ListViewModel : ViewModelBase
     {
         private ObservableCollection<Tour> _tours;
         public ObservableCollection<Tour> Tours
@@ -22,12 +20,6 @@ namespace TourPlanner.ViewModels
                 new Tour { Name = "Figlwarte" },
                 new Tour { Name = "Dorfrunde" }
             ];
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿namespace TourPlanner.ViewModels
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel: ViewModelBase
     {
-        public NavbarViewModel NavbarVM { get; set; }
-        public ListViewModel ListVM { get; set; }
-        public InputWithButtonViewModel InputVM { get; set; }
-        public DataGridViewModel DataGridVM { get; set; }
+        public NavbarViewModel NavbarVM { get; }
+        public ListViewModel ListVM { get; }
+        public InputWithButtonViewModel InputVM { get; }
+        public DataGridViewModel DataGridVM { get; }
 
         public MainWindowViewModel()
         {
