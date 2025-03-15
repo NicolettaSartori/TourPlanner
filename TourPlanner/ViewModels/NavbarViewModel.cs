@@ -10,10 +10,15 @@ namespace TourPlanner.ViewModels
         public ObservableCollection<string> MenuItems
         {
             get { return _menuItems; }
-            set { _menuItems = value; OnPropertyChanged(); }
+            set
+            {
+                _menuItems = value;
+                CountColumns = _menuItems.Count;
+                OnPropertyChanged();
+            }
         }
 
-        private int _countColumns = 5; 
+        private int _countColumns; 
         public int CountColumns
         {
             get { return _countColumns; }
@@ -24,8 +29,8 @@ namespace TourPlanner.ViewModels
 
         public NavbarViewModel()
         {
-            MenuItems = ["File", "Edit", "Options", "Settings", "Help"];
-
+            MenuItems = ["File", "Edit", "Options", string.Empty, string.Empty, "Help"];
+            CountColumns = MenuItems.Count;
             MenuItemCommand = new RelayCommand(menuItem => ExecuteMenuItemCommand(menuItem as string ?? string.Empty));
         }
 
