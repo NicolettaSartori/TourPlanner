@@ -6,10 +6,8 @@
              xmlns:local="clr-namespace:TourPlanner.Views"
              xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:TourLogsViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="250" d:DesignWidth="500">
-    <UserControl.DataContext>
-        <vm:TourLogsViewModel />
-    </UserControl.DataContext>
     
     <TabControl Style="{StaticResource TabControlWithButtons}">
         <TabItem Header="Tour Logs">

@@ -6,11 +6,8 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:InputWithButtonViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="25" d:DesignWidth="300">
-
-    <UserControl.DataContext>
-        <vm:InputWithButtonViewModel />
-    </UserControl.DataContext>
 
     <UserControl.Resources>
         <ResourceDictionary>
