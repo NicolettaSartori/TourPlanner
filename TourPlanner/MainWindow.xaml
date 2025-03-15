@@ -9,7 +9,9 @@
         xmlns:vm="clr-namespace:TourPlanner.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
-        Title="Tour Planner" Height="450" Width="800">
+        Title="Tour Planner"
+        Height="800" Width="1300"
+        MinHeight="800" MinWidth="600">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
@@ -33,13 +35,13 @@
             </Grid.RowDefinitions>
             
             <!-- Left Tab -->
-           <views:Tours Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+           <views:Tours Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" DataContext="{Binding TourVm}"/>
             
             <!-- Right top Tab -->
-            <views:TourInfo Grid.Row="0" Grid.Column="1"/>
+            <views:TourInfo Grid.Row="0" Grid.Column="1" DataContext="{Binding TourVm}"/>
             
             <!-- Right bottom Tab -->
-            <views:TourLogs Grid.Row="1" Grid.Column="1"/>
+            <views:TourLogs Grid.Row="1" Grid.Column="1" DataContext="{Binding TourLogsVm}"/>
         </Grid>
     </StackPanel>
 </Window>

@@ -1,13 +1,16 @@
-﻿namespace TourPlanner.Models;
+﻿using TourPlanner.Enums;
+
+namespace TourPlanner.Models;
 
 public class Tour
 {
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public string? From { get; set; }
-    public string? To { get; set; }
-    public string? TransportType { get; set; }
-    public int Distance { get; set; }
-    public int EstimatedTime { get; set; }
-    public string? RouteInformation { get; set; } // todo zu einem Bild machen
+    public required Guid Id { get; set; }
+    public required string Name { get; set; }
+    public required string Description { get; set; }
+    public required string From { get; set; }
+    public required string To { get; set; }
+    public required TransportType TransportType { get; set; }
+    public required string Distance { get; set; }
+    public required string EstimatedTime { get; set; }
+    public List<TourLog> Logs { get; } = [];
 }

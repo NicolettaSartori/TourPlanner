@@ -6,10 +6,8 @@
              xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              xmlns:local="clr-namespace:TourPlanner.Views"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:TourViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="350" d:DesignWidth="250">
-    <UserControl.DataContext>
-        <vm:TourViewModel />
-    </UserControl.DataContext>
     
     <TabControl Style="{StaticResource TabControlWithButtons}">
         <TabItem Header="Tours">
@@ -20,8 +18,9 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
          
-                    <ListBox Grid.Row="0" BorderThickness="0" ItemsSource="{Binding Tours}">
-                        <ListBox.ItemTemplate>
+                    <ListView Grid.Row="0" BorderThickness="0"
+                              ItemsSource="{Binding Tours}" SelectedItem="{Binding SelectedTour}">
+                        <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -33,8 +32,8 @@
                                     <Border Height="1" Background="LightGray" Grid.Row="1"/>
                                 </Grid>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                        </ListView.ItemTemplate>
+                    </ListView>
             
                     <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 1 0 0">
                         <TextBlock Text="Vestibulum at eros" HorizontalAlignment="Center" Padding="5" Foreground="Black"/>
