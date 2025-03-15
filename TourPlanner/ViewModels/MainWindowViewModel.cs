@@ -3,16 +3,16 @@
     public class MainWindowViewModel: ViewModelBase
     {
         public NavbarViewModel NavbarVM { get; }
-        public ListViewModel ListVM { get; }
+        public TourViewModel TourVm { get; }
         public InputWithButtonViewModel InputVM { get; }
-        public DataGridViewModel DataGridVM { get; }
+        public TourLogsViewModel TourLogsVm { get; }
 
         public MainWindowViewModel()
         {
             NavbarVM = new NavbarViewModel();
-            ListVM = new ListViewModel();
+            TourVm = new TourViewModel();
             InputVM = new InputWithButtonViewModel();
-            DataGridVM = new DataGridViewModel();
+            TourLogsVm = new TourLogsViewModel();
         }
     }
 }

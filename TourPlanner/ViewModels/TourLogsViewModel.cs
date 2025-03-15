@@ -3,12 +3,12 @@ using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class DataGridViewModel : ViewModelBase
+    public class TourLogsViewModel : ViewModelBase
     {
         public ObservableCollection<TourLog> TableData { get; }
        
 
-        public DataGridViewModel()
+        public TourLogsViewModel()
         {
             //Beispielsdaten
             TableData = [

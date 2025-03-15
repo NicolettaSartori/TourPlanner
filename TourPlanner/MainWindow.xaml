@@ -20,7 +20,6 @@
         <!-- Search -->
         <Border BorderThickness="0 0 0 1" BorderBrush="DarkGray">
             <views:InputWithButton DataContext="{Binding InputVM}" />
-
         </Border>
         
         <Grid>
@@ -34,30 +33,13 @@
             </Grid.RowDefinitions>
             
             <!-- Left Tab -->
-            <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
-                <TabItem Header="Tours">
-                    <views:List DataContext="{Binding ListVM}" />
-                </TabItem>
-            </TabControl>
+           <views:Tours Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+            
             <!-- Right top Tab -->
-            <TabControl Grid.Row="0" Grid.Column="1" >
-                <TabItem Header="General">
-                    <Label Content="Hier sind tolle Infos" Padding="3" Margin="8"/>
-                </TabItem>
-                <TabItem Header="Route">
-                    <views:Map />
-                </TabItem>
-                <TabItem Header="Misc">
-                    <Label Content="Lorem Ipsum" Padding="3" Margin="8"/>
-                </TabItem>
-            </TabControl>
+            <views:TourInfo Grid.Row="0" Grid.Column="1"/>
             
             <!-- Right bottom Tab -->
-            <TabControl Style="{StaticResource TabControlWithButtons}" Grid.Row="1" Grid.Column="1">
-                <TabItem Header="Tour Logs">
-                    <views:DataGrid DataContext="{Binding DataGridVM}" />
-                </TabItem>
-            </TabControl>
+            <views:TourLogs Grid.Row="1" Grid.Column="1"/>
         </Grid>
     </StackPanel>
 </Window>

@@ -3,7 +3,7 @@ using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class ListViewModel : ViewModelBase
+    public class TourViewModel : ViewModelBase
     {
         private ObservableCollection<Tour> _tours;
         public ObservableCollection<Tour> Tours
@@ -12,7 +12,7 @@ namespace TourPlanner.ViewModels
             set { _tours = value; OnPropertyChanged(); }
         }
 
-        public ListViewModel()
+        public TourViewModel()
         {
             Tours = [
                 new Tour { Name = "Wienerwald" },
