@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using TourPlanner.Enums;
 using TourPlanner.Models;
+using TourPlanner.MVVM;
 
 namespace TourPlanner.ViewModels
 {
@@ -11,13 +12,15 @@ namespace TourPlanner.ViewModels
         
         private Tour? _selectedTour;
 
+        private const string ImagePath = "/Images/";
+
         public Tour? SelectedTour
         {
             get => _selectedTour;
             set
             {
                 SetField(ref _selectedTour, value);
-                ImageUri = $"/Images/{_selectedTour.Id.ToString()}.png";
+                ImageUri = $"{ImagePath}{_selectedTour?.Id.ToString()}.png";
                 OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
@@ -32,6 +35,8 @@ namespace TourPlanner.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        public ICommand DeleteCommand { get; }
 
         public TourViewModel()
         {
@@ -82,6 +87,18 @@ namespace TourPlanner.ViewModels
                 },
             ];
             SelectedTour = Tours.FirstOrDefault();
+            DeleteCommand = new RelayCommand(_ => DeleteItem(), _ => SelectedTour != null);
+        }
+        
+        private void DeleteItem()
+        {
+            if (SelectedTour != null)
+            {
+                int index = Tours.IndexOf(SelectedTour);
+                Tours.Remove(SelectedTour);
+                // select the tour before 
+                SelectedTour = (index <= 0) ? Tours.FirstOrDefault() : Tours[index - 1];
+            }
         }
     }
 }

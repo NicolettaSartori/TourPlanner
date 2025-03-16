@@ -13,6 +13,7 @@
         <TabItem Header="Tour Logs">
             <DataGrid ItemsSource="{Binding TableData}"
                       AutoGenerateColumns="False"
+                      CanUserAddRows="False" CanUserDeleteRows="False"
                       AlternatingRowBackground="#ffedf1"
                       RowBackground="White"
                       HeadersVisibility="Column"
