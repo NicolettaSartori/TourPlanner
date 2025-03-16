@@ -67,7 +67,7 @@ namespace TourPlanner.ViewModels
                     TransportType = TransportType.Bike,
                     Distance = "45,4 km",
                     EstimatedTime = "2h 28min",
-                    Description = "Von Reschen fährst du dann erst einmal an der Westseite des Reschensees entlang, wobei du einen fantastischen Blick auf das blaue Wasser und die dahinter emporragenden Berge hast. Am Ende des Stausees kannst du dich auf eine fast zehn Kilometer lange Abfahrt freuen, auf der du es gemütlich rollen lassen kannst.A"
+                    Description = "Von Reschen fährst du dann erst einmal an der Westseite des Reschensees entlang, wobei du einen fantastischen Blick auf das blaue Wasser und die dahinter emporragenden Berge hast. Am Ende des Stausees kannst du dich auf eine fast zehn Kilometer lange Abfahrt freuen, auf der du es gemütlich rollen lassen kannst."
                 },
                 new Tour
                 {

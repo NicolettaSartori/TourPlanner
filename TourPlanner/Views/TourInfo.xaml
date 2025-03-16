@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:TourViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="200" d:DesignWidth="400">
+             d:DesignHeight="400" d:DesignWidth="400">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="Header">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -36,7 +36,9 @@
                 <Label Content="{Binding SelectedTour.TransportType}"/>
 
                 <Label Content="Description:" Style="{StaticResource Header}"/>
-                <Label Content="{Binding SelectedTour.Description}"/>
+                <Label>
+                    <TextBlock Text="{Binding SelectedTour.Description}" TextWrapping="Wrap" />
+                </Label>
             </StackPanel>
 
         </TabItem>
