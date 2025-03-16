@@ -103,7 +103,7 @@
                             </Grid.ColumnDefinitions>
                             <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
                             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                <Button Content="+" Style="{StaticResource HeaderButtonStyle}"/>
+                                <Button Content="+" Command="{Binding AddCommand}" Style="{StaticResource HeaderButtonStyle}"/>
                                 <Button Content="-" Command="{Binding DeleteCommand}" Style="{StaticResource HeaderButtonStyle}"/>
                                 <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
                             </StackPanel>

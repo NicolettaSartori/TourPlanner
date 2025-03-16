@@ -3,10 +3,11 @@ using System.Windows.Input;
 using TourPlanner.Enums;
 using TourPlanner.Models;
 using TourPlanner.MVVM;
+using TourPlanner.Windows;
 
 namespace TourPlanner.ViewModels
 {
-    public class TourViewModel : ViewModelBase
+    public class TourViewModel : NewWindowViewModelBase
     {
         public ObservableCollection<Tour> Tours { get; }
         
@@ -36,6 +37,7 @@ namespace TourPlanner.ViewModels
             }
         }
         
+        public ICommand AddCommand { get; }
         public ICommand DeleteCommand { get; }
 
         public TourViewModel()
@@ -86,8 +88,17 @@ namespace TourPlanner.ViewModels
                     Description = "Schwere Wanderung. Sehr gute Kondition erforderlich. Leicht begehbare Wege. Kein besonderes Können erforderlich."
                 },
             ];
+            
             SelectedTour = Tours.FirstOrDefault();
+            AddCommand = new RelayCommand(_ => AddItem());
             DeleteCommand = new RelayCommand(_ => DeleteItem(), _ => SelectedTour != null);
+        }
+        
+        private void AddItem()
+        {
+            NewWindow = new NewTourWindow();
+            NewWindow.DataContext = this;
+            NewWindow.ShowDialog();
         }
         
         private void DeleteItem()
@@ -99,6 +110,12 @@ namespace TourPlanner.ViewModels
                 // select the tour before 
                 SelectedTour = (index <= 0) ? Tours.FirstOrDefault() : Tours[index - 1];
             }
+        }
+
+        protected override void Save()
+        { 
+            Console.WriteLine("in Save");
+            NewWindow?.Close();
         }
     }
 }
