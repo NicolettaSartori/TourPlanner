@@ -12,5 +12,5 @@ public class Tour
     public required TransportType TransportType { get; set; }
     public required string Distance { get; set; }
     public required string EstimatedTime { get; set; }
-    public List<TourLog> Logs { get; } = [];
+    public List<TourLog> Logs { get; set; } = [];
 }

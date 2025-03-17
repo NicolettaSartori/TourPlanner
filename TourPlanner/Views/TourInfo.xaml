@@ -47,8 +47,21 @@
                 <Image Source="{Binding ImageUri}" Height="400" />
             </Border>
         </TabItem>
-        <TabItem Header="Misc">
-            <Label Content="Lorem Ipsum" Padding="3" Margin="8"/>
+        <TabItem Header="Comments">
+            <Grid>
+                <ListView IsHitTestVisible="False" ItemsSource="{Binding SelectedTour.Logs}" Margin="8" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="Auto">
+                                <TextBlock Text="{Binding Comment}" 
+                                   Padding="0 5"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ListBox}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListView>
+            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

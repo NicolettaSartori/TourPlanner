@@ -5,13 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:TourPlanner.Views"
              xmlns:vm="clr-namespace:TourPlanner.ViewModels"
+             xmlns:conv="clr-namespace:TourPlanner.Converter"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:TourLogsViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=vm:TourViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="250" d:DesignWidth="500">
+    <UserControl.Resources>
+        <conv:NumberToStarsConverter x:Key="RatingToStarsConverter" />
+    </UserControl.Resources>
     
     <TabControl Style="{StaticResource TabControlWithButtons}">
         <TabItem Header="Tour Logs">
-            <DataGrid ItemsSource="{Binding TableData}"
+            <DataGrid ItemsSource="{Binding SelectedTour.Logs}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False"
                       AlternatingRowBackground="#ffedf1"
@@ -38,6 +42,8 @@
                     <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat={}{0:dd.MM.yyyy}}" Width="*"/>
                     <DataGridTextColumn Header="Duration" Binding="{Binding TotalTime}" Width="*"/>
                     <DataGridTextColumn Header="Distance" Binding="{Binding TotalDistance}" Width="*" />
+                    <DataGridTextColumn Header="Difficulty" Binding="{Binding Difficulty}" Width="*" />
+                    <DataGridTextColumn Header="Rating" Binding="{Binding Rating, Converter={StaticResource RatingToStarsConverter}}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </TabItem>
