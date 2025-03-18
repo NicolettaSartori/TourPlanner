@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:TourPlanner.ViewModels"
              xmlns:conv="clr-namespace:TourPlanner.Converter"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:TourViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=vm:TourLogsViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="250" d:DesignWidth="500">
     <UserControl.Resources>
         <conv:NumberToStarsConverter x:Key="RatingToStarsConverter" />
@@ -15,7 +15,8 @@
     
     <TabControl Style="{StaticResource TabControlWithButtons}">
         <TabItem Header="Tour Logs">
-            <DataGrid ItemsSource="{Binding SelectedTour.Logs}"
+            <DataGrid ItemsSource="{Binding TourLogs}"
+                      SelectedItem="{Binding SelectedLog}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False"
                       AlternatingRowBackground="#ffedf1"
