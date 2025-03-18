@@ -1,20 +1,24 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using TourPlanner.MVVM;
 
 namespace TourPlanner.ViewModels
 {
-    public class NavbarViewModel : INotifyPropertyChanged
+    public class NavbarViewModel : ViewModelBase
     {
         private ObservableCollection<string> _menuItems;
         public ObservableCollection<string> MenuItems
         {
             get { return _menuItems; }
-            set { _menuItems = value; OnPropertyChanged(); }
+            set
+            {
+                _menuItems = value;
+                CountColumns = _menuItems.Count;
+                OnPropertyChanged();
+            }
         }
 
-        private int _countColumns = 5; 
+        private int _countColumns; 
         public int CountColumns
         {
             get { return _countColumns; }
@@ -25,51 +29,14 @@ namespace TourPlanner.ViewModels
 
         public NavbarViewModel()
         {
-            MenuItems = new ObservableCollection<string>
-            {
-                "File", "Edit", "Options", "Settings", "Help"
-            };
-
-            MenuItemCommand = new RelayCommand<string>(ExecuteMenuItemCommand);
+            MenuItems = ["File", "Edit", "Options", string.Empty, string.Empty, "Help"];
+            CountColumns = MenuItems.Count;
+            MenuItemCommand = new RelayCommand(menuItem => ExecuteMenuItemCommand(menuItem as string ?? string.Empty));
         }
 
         private void ExecuteMenuItemCommand(string menuItem)
         {
-            System.Diagnostics.Debug.WriteLine($"Menu item clicked: {menuItem}");
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class RelayCommand<T> : ICommand
-    {
-        private readonly Action<T> _execute;
-        private readonly Predicate<T> _canExecute;
-
-        public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null || _canExecute((T)parameter);
-        }
-
-        public void Execute(object parameter)
-        {
-            _execute((T)parameter);
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            Console.WriteLine($"Menu item clicked: {menuItem}");
         }
     }
 }

@@ -1,29 +1,5 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- TabControl without Buttons -->
-    <Style TargetType="TabControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TabControl">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
-
-                        <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
-                            <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
-                                <ContentPresenter ContentSource="SelectedContent"/>
-                            </Border>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
     <!-- Tab Content -->
     <Style TargetType="TabItem">
         <Setter Property="Foreground" Value="DimGray"/>
@@ -65,55 +41,82 @@
         </Setter>
     </Style>
     
-    <Style x:Key="HeaderButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-            <Setter Property="Width" Value="24"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="Margin" Value="2,0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="12"
-                                BorderThickness="0"
-                                BorderBrush="Transparent">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TabControlWithButtons" TargetType="TabControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabControl">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+    <!-- TabControl without Buttons -->
+    <Style TargetType="TabControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Button Content="+" Style="{StaticResource HeaderButtonStyle}"/>
-                                    <Button Content="-" Style="{StaticResource HeaderButtonStyle}"/>
-                                    <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
-                                </StackPanel>
-                            </Grid>
+                        <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
 
-                            <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
-                                <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
-                                    <ContentPresenter ContentSource="SelectedContent"/>
-                                </Border>
+                        <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
+                            <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
+                                <ContentPresenter ContentSource="SelectedContent"/>
                             </Border>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- Button in TabControl with Buttons -->
+    <Style x:Key="HeaderButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Margin" Value="2,0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="12"
+                            BorderThickness="0"
+                            BorderBrush="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- TabControl with Buttons -->
+    <Style x:Key="TabControlWithButtons" TargetType="TabControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Button Content="+" Command="{Binding AddCommand}" Style="{StaticResource HeaderButtonStyle}"/>
+                                <Button Content="-" Command="{Binding DeleteCommand}" Style="{StaticResource HeaderButtonStyle}"/>
+                                <Button Content="..." Style="{StaticResource HeaderButtonStyle}"/>
+                            </StackPanel>
                         </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
+                        <Border Grid.Row="1" Background="White" BorderBrush="CornflowerBlue" BorderThickness="0 3 0 0">
+                            <Border BorderBrush="DarkGray" BorderThickness="1 0 0 1">
+                                <ContentPresenter ContentSource="SelectedContent"/>
+                            </Border>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
