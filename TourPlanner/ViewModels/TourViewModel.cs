@@ -9,7 +9,7 @@ namespace TourPlanner.ViewModels
 {
     public class TourViewModel : NewWindowViewModelBase
     {
-        public static ObservableCollection<Tour>? Tours { get; private set; }
+        public ObservableCollection<Tour>? Tours { get; set; }
         
         private Tour? _selectedTour;
 
@@ -61,7 +61,7 @@ namespace TourPlanner.ViewModels
         
         private void DeleteItem()
         {
-            if (SelectedTour != null)
+            if (SelectedTour != null && Tours != null)
             {
                 int index = Tours.IndexOf(SelectedTour);
                 Tours.Remove(SelectedTour);

@@ -51,7 +51,6 @@ public class TourLogsViewModel : NewWindowViewModelBase
         
     private void DeleteItem()
     {
-        Console.WriteLine("Delete Item");
         if (SelectedLog != null)
         {
             TourViewModel?.DeleteTourLogFromSelected(SelectedLog);
