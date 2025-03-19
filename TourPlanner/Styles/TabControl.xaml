@@ -104,15 +104,19 @@
                             </Grid.ColumnDefinitions>
                             <TabPanel Grid.Column="0"  Background="White" IsItemsHost="True"/>
                             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                <Button Content="+" Command="{Binding DataContext.AddCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
-                                        Style="{StaticResource HeaderButtonStyle}"/>
-    
-                                <Button Content="-" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
-                                        Style="{StaticResource HeaderButtonStyle}"/>
-    
+                                <Button Command="{Binding DataContext.AddCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
+                                        Style="{StaticResource HeaderButtonStyle}">
+                                    <fa:ImageAwesome Icon="Plus" Height="6" Foreground="White"/>
+                                </Button>
+                                
                                 <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
                                         Style="{StaticResource HeaderButtonStyle}">
                                     <fa:ImageAwesome Icon="Pencil" Height="6" Foreground="White"/>
+                                </Button>
+    
+                                <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
+                                        Style="{StaticResource HeaderButtonStyle}">
+                                    <fa:ImageAwesome Icon="Remove" Height="6" Foreground="White"/>
                                 </Button>
                             </StackPanel>
                         </Grid>

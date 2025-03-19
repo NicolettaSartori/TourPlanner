@@ -16,7 +16,7 @@
     <TabControl Style="{StaticResource TabControlWithButtons}">
         <TabItem Header="Tour Logs">
             <DataGrid ItemsSource="{Binding TourLogs}"
-                      SelectedItem="{Binding SelectedLog}"
+                      SelectedItem="{Binding SelectedTourLog}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False"
                       AlternatingRowBackground="#ffedf1"
