@@ -9,5 +9,5 @@ public class TourLog
     public Difficulty Difficulty { get; set; }
     public required string? TotalDistance { get; set; }
     public required string? TotalTime { get; set; }
-    public int Rating { get; set; }
+    public int? Rating { get; set; }
 }

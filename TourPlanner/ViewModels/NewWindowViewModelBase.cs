@@ -26,7 +26,7 @@ public abstract class NewWindowViewModelBase: ViewModelBase
         UpdateCommand = new RelayCommand(_ => UpdateItem(), _ => CanUpdate());
     }
     
-    protected void CloseWindow()
+    protected virtual void CloseWindow()
     {
         NewWindow?.Close();
     }

@@ -28,31 +28,31 @@
 
         <!-- Tour Name -->
         <Label Content="Tour Name:" FontWeight="Bold" Grid.Row="0" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTour.Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" MinWidth="200"/>
+        <TextBox Text="{Binding NewTour.Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" MinWidth="200"/>
 
         <!-- Route -->
         <Label Content="Route:" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-            <TextBox Text="{Binding SelectedTour.From, UpdateSourceTrigger=PropertyChanged}" Width="Auto" MinWidth="100"/>
+            <TextBox Text="{Binding NewTour.From, UpdateSourceTrigger=PropertyChanged}" Width="Auto" MinWidth="100"/>
             <TextBlock Text=" → " VerticalAlignment="Center"/>
-            <TextBox Text="{Binding SelectedTour.To, UpdateSourceTrigger=PropertyChanged}" Width="Auto" MinWidth="100"/>
+            <TextBox Text="{Binding NewTour.To, UpdateSourceTrigger=PropertyChanged}" Width="Auto" MinWidth="100"/>
         </StackPanel>
 
         <!-- Distance -->
         <Label Content="Distance (km):" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTour.Distance, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="Auto" MinWidth="100"/>
+        <TextBox Text="{Binding NewTour.Distance, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="Auto" MinWidth="100"/>
 
         <!-- Estimated Time -->
         <Label Content="Estimated Time:" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTour.EstimatedTime, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="Auto" MinWidth="100"/>
+        <TextBox Text="{Binding NewTour.EstimatedTime, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="Auto" MinWidth="100"/>
 
         <!-- Transport Type -->
         <Label Content="Transport Type:" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
-        <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding SelectedTour.TransportType}" Grid.Row="4" Grid.Column="1" Width="Auto" MinWidth="150"/>
+        <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding NewTour.TransportType}" Grid.Row="4" Grid.Column="1" Width="Auto" MinWidth="150"/>
 
         <!-- Description -->
         <Label Content="Description:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTour.Description, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1"
+        <TextBox Text="{Binding NewTour.Description, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1"
                  Width="Auto" MinWidth="300" MinHeight="80" TextWrapping="Wrap" AcceptsReturn="True"/>
 
         <!-- Buttons -->

@@ -27,16 +27,31 @@
 
         <!-- Date -->
         <Label Content="Date:" FontWeight="Bold" Grid.Row="0" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTourLog.DateTime, StringFormat='dd.MM.yyyy', UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Width="200"/>
+        <TextBox Text="{Binding NewTourLog.DateTime, StringFormat='dd.MM.yyyy', UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" MinWidth="200"/>
 
         <!-- Total Time -->
         <Label Content="Total Time:" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTourLog.TotalTime, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="200"/>
+        <TextBox Text="{Binding NewTourLog.TotalTime, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" MinWidth="200"/>
 
         <!-- Total Distance -->
         <Label Content="Total Distance (km):" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding SelectedTourLog.TotalDistance, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="200"/>
+        <TextBox Text="{Binding NewTourLog.TotalDistance, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" MinWidth="200"/>
 
+        <!-- Difficulty -->
+        <Label Content="Difficulty:" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
+        <ComboBox ItemsSource="{Binding Difficulties}" SelectedItem="{Binding NewTourLog.Difficulty}" Grid.Row="3" Grid.Column="1" Width="Auto" MinWidth="200"/>
+
+        <!-- Rating -->
+        <Label Content="Rating:" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
+        <ComboBox ItemsSource="{Binding Ratings}" 
+                  SelectedItem="{Binding NewTourLog.Rating}" 
+                  Grid.Row="4" Grid.Column="1"/>
+        
+        <!-- Comment -->
+        <Label Content="Comment:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
+        <TextBox Text="{Binding NewTourLog.Comment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1"
+                 Width="Auto" MinWidth="200" MinHeight="80" TextWrapping="Wrap" AcceptsReturn="True"/>
+        
         <!-- Buttons -->
         <Grid Grid.Row="6" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>

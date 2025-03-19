@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer.Factories;
 using TourPlanner.Enums;
@@ -70,6 +71,12 @@ namespace TourPlanner.ViewModels
             NewWindow.DataContext = this;
             NewWindow.ShowDialog();
         }
+
+        public void AddTourLogToSelected(TourLog tourLog)
+        {
+            if (SelectedTour != null && Tours != null)
+                SelectedTour.Logs.Add(tourLog);
+        }
         
         protected override void DeleteItem()
         {
@@ -124,6 +131,7 @@ namespace TourPlanner.ViewModels
         {
             if (SelectedTour == null) return;
 
+            NewTour = JsonSerializer.Deserialize<Tour>(JsonSerializer.Serialize(SelectedTour));
             NewWindow = new EditTourWindow();
             NewWindow.DataContext = this;
             NewWindow.ShowDialog();
@@ -131,8 +139,10 @@ namespace TourPlanner.ViewModels
         
         protected override void UpdateItem()
         {
-            if (SelectedTour != null)
+            if (NewTour != null && SelectedTour != null)
             {
+                Tours[Tours.IndexOf(SelectedTour)] = NewTour;
+                SelectedTour = NewTour;
                 Console.WriteLine($"Tour {SelectedTour.Name} wurde aktualisiert.");
                 CloseWindow();
             }
@@ -148,6 +158,11 @@ namespace TourPlanner.ViewModels
                    !string.IsNullOrWhiteSpace(SelectedTour.EstimatedTime) &&
                    !string.IsNullOrWhiteSpace(SelectedTour.Description);
         }
-
+        
+        protected override void CloseWindow()
+        {
+            NewTour = null;
+            NewWindow?.Close();
+        }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using TourPlanner.Models;
-using System.Windows;
 using System.Windows.Input;
-using TourPlanner.MVVM;
-using TourPlanner.Models;
-using TourPlanner.MVVM;
+using TourPlanner.Enums;
 using TourPlanner.Windows;
 
 namespace TourPlanner.ViewModels
@@ -36,13 +34,16 @@ namespace TourPlanner.ViewModels
         public TourLog? NewTourLog { get; private set; }
         public TourViewModel? TourViewModel { get; set; }
         
+        public List<Difficulty> Difficulties { get; } = Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().ToList();
+        public List<int> Ratings { get; } = [1, 2, 3, 4, 5];
+        
         protected override void AddItem()
         {
             NewTourLog = new TourLog
             {
                 DateTime = DateTime.Now,
                 TotalTime = "",
-                TotalDistance = ""
+                TotalDistance = "",
             };
 
             NewWindow = new NewTourLogWindow();
@@ -55,8 +56,8 @@ namespace TourPlanner.ViewModels
             if (NewTourLog == null)
                 return;
             
-            // todo
-            // TableData.Add(NewTourLog);
+            TourViewModel?.AddTourLogToSelected(NewTourLog);
+            TourLogs.Add(NewTourLog);
             SelectedTourLog = NewTourLog;
             CloseWindow();
         }
@@ -65,7 +66,8 @@ namespace TourPlanner.ViewModels
         {
             return NewTourLog != null &&
                    !string.IsNullOrWhiteSpace(NewTourLog.TotalTime) &&
-                   !string.IsNullOrWhiteSpace(NewTourLog.TotalDistance);
+                   !string.IsNullOrWhiteSpace(NewTourLog.TotalDistance) &&
+                   NewTourLog.Rating != default;
         }
 
         protected override bool CanDelete()
@@ -82,6 +84,7 @@ namespace TourPlanner.ViewModels
         {
             if (SelectedTourLog == null) return;
 
+            NewTourLog = JsonSerializer.Deserialize<TourLog>(JsonSerializer.Serialize(SelectedTourLog));
             NewWindow = new EditTourLogWindow();
             NewWindow.DataContext = this;
             NewWindow.ShowDialog();
@@ -89,8 +92,10 @@ namespace TourPlanner.ViewModels
 
         protected override void UpdateItem()
         {
-            if (SelectedTourLog != null)
+            if (SelectedTourLog != null && NewTourLog != null)
             {
+                TourLogs[TourLogs.IndexOf(SelectedTourLog)] = NewTourLog;
+                SelectedTourLog = NewTourLog;
                 Console.WriteLine($"Tour Log {SelectedTourLog.DateTime} wurde aktualisiert.");
                 CloseWindow();
             }
@@ -100,8 +105,7 @@ namespace TourPlanner.ViewModels
         {
             return SelectedTourLog != null &&
                    !string.IsNullOrWhiteSpace(SelectedTourLog.TotalTime) &&
-                   !string.IsNullOrWhiteSpace(SelectedTourLog.TotalDistance) &&
-                   !string.IsNullOrWhiteSpace(SelectedTourLog.Comment);
+                   !string.IsNullOrWhiteSpace(SelectedTourLog.TotalDistance);
         }
 
         protected override void DeleteItem()
@@ -111,6 +115,12 @@ namespace TourPlanner.ViewModels
                 TourViewModel?.DeleteTourLogFromSelected(SelectedTourLog);
                 TourLogs.Remove(SelectedTourLog);
             }
+        }
+
+        protected override void CloseWindow()
+        {
+            NewTourLog = null;
+            NewWindow?.Close();
         }
     }
 }
