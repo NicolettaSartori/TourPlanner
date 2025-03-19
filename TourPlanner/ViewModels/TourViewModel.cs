@@ -42,7 +42,7 @@ namespace TourPlanner.ViewModels
         
 
         public Tour? NewTour { get; private set; } 
-        public ObservableCollection<TransportType> TransportTypes { get; }
+        public List<TransportType> TransportTypes { get; } = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().ToList();
 
         public TourViewModel(TourLogsViewModel tourLogsViewModel)
         {
