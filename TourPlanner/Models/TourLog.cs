@@ -1,11 +1,13 @@
-﻿namespace TourPlanner.Models;
+﻿using TourPlanner.Enums;
+
+namespace TourPlanner.Models;
 
 public class TourLog
 {
-    public DateTime DateTime { get; set; }
+    public required DateTime DateTime { get; set; }
     public string? Comment { get; set; }
-    public int Difficulty { get; set; }
-    public string? TotalDistance { get; set; }
-    public string? TotalTime { get; set; }
+    public Difficulty Difficulty { get; set; }
+    public required string? TotalDistance { get; set; }
+    public required string? TotalTime { get; set; }
     public int Rating { get; set; }
 }
