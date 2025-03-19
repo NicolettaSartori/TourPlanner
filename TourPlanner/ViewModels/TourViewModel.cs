@@ -100,7 +100,7 @@ namespace TourPlanner.ViewModels
             SelectedTour = Tours.FirstOrDefault();
             AddCommand = new RelayCommand(_ => AddItem());
             DeleteCommand = new RelayCommand(_ => DeleteItem(), _ => SelectedTour != null);
-            SaveCommand = new RelayCommand(_ => SaveNewTour(), _ => NewTour != null);
+            SaveCommand = new RelayCommand(_ => SaveNewTour(), _ => CanSaveTour());
             EditCommand = new RelayCommand(_ => EditItem(), _ => SelectedTour != null);
             UpdateCommand = new RelayCommand(_ => UpdateTour(), _ => CanUpdateTour());
         }
@@ -148,12 +148,15 @@ namespace TourPlanner.ViewModels
 
         private bool CanSaveTour()
         {
-            return !string.IsNullOrWhiteSpace(NewTour?.Name) &&
-                   !string.IsNullOrWhiteSpace(NewTour?.From) &&
-                   !string.IsNullOrWhiteSpace(NewTour?.To) &&
-                   !string.IsNullOrWhiteSpace(NewTour?.Distance) &&
-                   !string.IsNullOrWhiteSpace(NewTour?.EstimatedTime);
+            return NewTour != null &&
+                   !string.IsNullOrWhiteSpace(NewTour.Name) &&
+                   !string.IsNullOrWhiteSpace(NewTour.From) &&
+                   !string.IsNullOrWhiteSpace(NewTour.To) &&
+                   !string.IsNullOrWhiteSpace(NewTour.Distance) &&
+                   !string.IsNullOrWhiteSpace(NewTour.EstimatedTime) &&
+                   !string.IsNullOrWhiteSpace(NewTour.Description);
         }
+
 
         protected override void Save()
         { 
