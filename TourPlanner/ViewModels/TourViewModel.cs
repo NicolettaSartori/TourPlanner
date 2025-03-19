@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer.Factories;
+using TourPlanner.Enums;
 using TourPlanner.Models;
 using TourPlanner.MVVM;
 using TourPlanner.Windows;
@@ -39,13 +40,8 @@ namespace TourPlanner.ViewModels
             }
         }
         
-        public ICommand AddCommand { get; }
-        public ICommand DeleteCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand UpdateCommand { get; }
-        
 
-        public Tour NewTour { get; private set; } 
+        public Tour? NewTour { get; private set; } 
         public ObservableCollection<TransportType> TransportTypes { get; }
 
         public TourViewModel(TourLogsViewModel tourLogsViewModel)
@@ -54,14 +50,9 @@ namespace TourPlanner.ViewModels
             _tourLogsViewModel.TourViewModel = this;
             Tours = TourFactory.GetTours();
             SelectedTour = Tours.FirstOrDefault();
-            AddCommand = new RelayCommand(_ => AddItem());
-            DeleteCommand = new RelayCommand(_ => DeleteItem(), _ => SelectedTour != null);
-            SaveCommand = new RelayCommand(_ => SaveNewTour(), _ => CanSaveTour());
-            EditCommand = new RelayCommand(_ => EditItem(), _ => SelectedTour != null);
-            UpdateCommand = new RelayCommand(_ => UpdateTour(), _ => CanUpdateTour());
         }
         
-        private void AddItem()
+        protected override void AddItem()
         {
             NewTour = new Tour
             {
@@ -80,7 +71,7 @@ namespace TourPlanner.ViewModels
             NewWindow.ShowDialog();
         }
         
-        private void DeleteItem()
+        protected override void DeleteItem()
         {
             if (SelectedTour != null && Tours != null)
             {
@@ -97,18 +88,18 @@ namespace TourPlanner.ViewModels
             OnPropertyChanged(nameof(SelectedTour));
         }
         
-        private void SaveNewTour()
+        protected override void Save()
         {
             if (NewTour != null)
             {
                 NewTour.Id = Guid.NewGuid();
-                Tours.Add(NewTour); // Tour zur Liste hinzufügen
+                Tours?.Add(NewTour);
                 SelectedTour = NewTour;
                 CloseWindow();
             }
         }
 
-        private bool CanSaveTour()
+        protected override bool CanSave()
         {
             return NewTour != null &&
                    !string.IsNullOrWhiteSpace(NewTour.Name) &&
@@ -119,13 +110,17 @@ namespace TourPlanner.ViewModels
                    !string.IsNullOrWhiteSpace(NewTour.Description);
         }
 
-
-        protected override void Save()
-        { 
-            NewWindow?.Close();
+        protected override bool CanDelete()
+        {
+            return SelectedTour != null;
         }
-        
-        private void EditItem()
+
+        protected override bool CanEdit()
+        {
+            return SelectedTour != null;
+        }
+
+        protected override void EditItem()
         {
             if (SelectedTour == null) return;
 
@@ -134,7 +129,7 @@ namespace TourPlanner.ViewModels
             NewWindow.ShowDialog();
         }
         
-        private void UpdateTour()
+        protected override void UpdateItem()
         {
             if (SelectedTour != null)
             {
@@ -143,7 +138,7 @@ namespace TourPlanner.ViewModels
             }
         }
 
-        private bool CanUpdateTour()
+        protected override bool CanUpdate()
         {
             return SelectedTour != null &&
                    !string.IsNullOrWhiteSpace(SelectedTour.Name) &&

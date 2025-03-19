@@ -11,7 +11,17 @@ namespace TourPlanner.ViewModels
 {
     public class TourLogsViewModel : NewWindowViewModelBase
     {
-        public ObservableCollection<TourLog> TableData { get; }
+        private ObservableCollection<TourLog> _tourLogs = [];
+        public ObservableCollection<TourLog> TourLogs
+        {
+            get => _tourLogs;
+            set
+            {
+                _tourLogs = value;
+                OnPropertyChanged();
+            }
+        }
+
         private TourLog? _selectedTourLog;
         public TourLog? SelectedTourLog
         {
@@ -23,33 +33,10 @@ namespace TourPlanner.ViewModels
                 CommandManager.InvalidateRequerySuggested();
             }
         }
-        public TourLog NewTourLog { get; private set; }
+        public TourLog? NewTourLog { get; private set; }
+        public TourViewModel? TourViewModel { get; set; }
         
-        public ICommand AddCommand { get; }
-        public ICommand DeleteCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand SaveCommand { get; }
-        public ICommand UpdateCommand { get; }
-
-
-        public TourLogsViewModel()
-        {
-            //Beispielsdaten
-            TableData = [
-                new TourLog { DateTime = DateTime.Parse("2024-03-03"), TotalTime = "2h 15m", TotalDistance = "10 km" },
-                new TourLog { DateTime = DateTime.Parse("2024-03-04"), TotalTime = "3h 00m", TotalDistance = "15 km" },
-                new TourLog { DateTime = DateTime.Parse("2024-03-05"), TotalTime = "1h 45m", TotalDistance = "8 km" }
-            ];
-            
-            AddCommand = new RelayCommand(_ => AddTourLog());
-            DeleteCommand = new RelayCommand(_ => DeleteTourLog(), _ => SelectedTourLog != null);
-            EditCommand = new RelayCommand(_ => EditTourLog(), _ => SelectedTourLog != null);
-            SaveCommand = new RelayCommand(_ => SaveNewTourLog(), _ => CanSaveTourLog());
-            UpdateCommand = new RelayCommand(_ => UpdateTourLog(), _ => SelectedTourLog != null);
-
-        }
-        
-        private void AddTourLog()
+        protected override void AddItem()
         {
             NewTourLog = new TourLog
             {
@@ -63,17 +50,35 @@ namespace TourPlanner.ViewModels
             NewWindow.ShowDialog();
         }
 
-        private void SaveNewTourLog()
+        protected override void Save()
         {
-            if (NewTourLog != null)
-            {
-                TableData.Add(NewTourLog);
-                SelectedTourLog = NewTourLog;
-                CloseWindow();
-            }
+            if (NewTourLog == null)
+                return;
+            
+            // todo
+            // TableData.Add(NewTourLog);
+            SelectedTourLog = NewTourLog;
+            CloseWindow();
+        }
+        
+        protected override bool CanSave()
+        {
+            return NewTourLog != null &&
+                   !string.IsNullOrWhiteSpace(NewTourLog.TotalTime) &&
+                   !string.IsNullOrWhiteSpace(NewTourLog.TotalDistance);
         }
 
-        private void EditTourLog()
+        protected override bool CanDelete()
+        {
+            return SelectedTourLog != null;
+        }
+
+        protected override bool CanEdit()
+        {
+            return SelectedTourLog != null;
+        }
+
+        protected override void EditItem()
         {
             if (SelectedTourLog == null) return;
 
@@ -82,7 +87,7 @@ namespace TourPlanner.ViewModels
             NewWindow.ShowDialog();
         }
 
-        private void UpdateTourLog()
+        protected override void UpdateItem()
         {
             if (SelectedTourLog != null)
             {
@@ -91,35 +96,21 @@ namespace TourPlanner.ViewModels
             }
         }
 
-        private bool CanUpdateTourLog()
+        protected override bool CanUpdate()
         {
             return SelectedTourLog != null &&
                    !string.IsNullOrWhiteSpace(SelectedTourLog.TotalTime) &&
                    !string.IsNullOrWhiteSpace(SelectedTourLog.TotalDistance) &&
                    !string.IsNullOrWhiteSpace(SelectedTourLog.Comment);
         }
-        
-        private bool CanSaveTourLog()
-        {
-            return NewTourLog != null &&
-                   !string.IsNullOrWhiteSpace(NewTourLog.TotalTime) &&
-                   !string.IsNullOrWhiteSpace(NewTourLog.TotalDistance);
-        }
 
-
-        private void DeleteTourLog()
+        protected override void DeleteItem()
         {
             if (SelectedTourLog != null)
             {
-                TableData.Remove(SelectedTourLog);
-                SelectedTourLog = TableData.FirstOrDefault();
+                TourViewModel?.DeleteTourLogFromSelected(SelectedTourLog);
+                TourLogs.Remove(SelectedTourLog);
             }
-        }
-        
-        protected override void Save()
-        {
-            Console.WriteLine("in Save");
-            CloseWindow();
         }
     }
 }
