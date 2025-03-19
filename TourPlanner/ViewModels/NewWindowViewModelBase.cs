@@ -7,7 +7,8 @@ namespace TourPlanner.ViewModels;
 public abstract class NewWindowViewModelBase: ViewModelBase
 {
     public ICommand CloseCommand { get; }
-    public ICommand SaveCommand { get; }
+    public ICommand SaveCommand { get; protected set; }
+
     
     public Window? NewWindow { get; set; }
 
