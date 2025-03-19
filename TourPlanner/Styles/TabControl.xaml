@@ -1,4 +1,5 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:fa="http://schemas.fontawesome.io/icons/"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Tab Content -->
     <Style TargetType="TabItem">
@@ -109,8 +110,10 @@
                                 <Button Content="-" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
                                         Style="{StaticResource HeaderButtonStyle}"/>
     
-                                <Button Content="..." Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
-                                        Style="{StaticResource HeaderButtonStyle}"/>
+                                <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" 
+                                        Style="{StaticResource HeaderButtonStyle}">
+                                    <fa:ImageAwesome Icon="Pencil" Height="6" Foreground="White"/>
+                                </Button>
                             </StackPanel>
                         </Grid>
 

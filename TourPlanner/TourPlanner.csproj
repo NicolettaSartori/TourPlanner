@@ -18,6 +18,17 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="obj\Debug\net8.0-windows\App.baml" />
+      <Content Include="obj\Debug\net8.0-windows\MainWindow.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Views\InputWithButton.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Views\Navbar.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Views\TourInfo.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Views\TourLogs.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Views\Tours.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Windows\EditTourLogWindow.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Windows\EditTourWindow.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Windows\NewTourLogWindow.baml" />
+      <Content Include="obj\Debug\net8.0-windows\Windows\NewTourWindow.baml" />
       <None Remove="Images\d53b5c0e-9240-43b3-9b3d-8cefac645f38.png" />
       <Content Include="Images\d53b5c0e-9240-43b3-9b3d-8cefac645f38.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
