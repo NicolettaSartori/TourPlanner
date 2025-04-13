@@ -98,6 +98,7 @@ public class TourViewModelTests
         [
             new TourLog
             {
+                Id = Guid.NewGuid(),
                 DateTime = DateTime.Parse("2021-10-25"),
                 Difficulty = Difficulty.Medium,
                 TotalDistance = "45,4 km",

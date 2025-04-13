@@ -24,6 +24,7 @@ public class TourFactory
                 Logs = [
                     new TourLog
                     {
+                        Id = Guid.NewGuid(),
                         DateTime = DateTime.Parse("2019-11-1"),
                         Comment = "Wunderschöne Etappe mit Abstechern zu den Bruchhauser Steinen und dem Hennestausee bei Meschede.",
                         Difficulty = Difficulty.Medium,
@@ -33,6 +34,7 @@ public class TourFactory
                     },
                     new TourLog
                     {
+                        Id = Guid.NewGuid(),
                         DateTime = DateTime.Parse("2017-12-19"),
                         Comment = "Los geht es mit dem RuhrtalRadweg in dem schönen Winterberg. Zum Startpunkt kommst du ganz unkompliziert mit der Bahn. Von dort aus geht es dann in 41 Kilometern meistens bergab bis zum ersten Etappenziel in Meschede.",
                         Difficulty = Difficulty.Medium,
@@ -55,6 +57,7 @@ public class TourFactory
                 Logs = [
                     new TourLog
                     {
+                        Id = Guid.NewGuid(),
                         DateTime = DateTime.Parse("2017-06-19"),
                         Comment = "Von tschechischem Bier höchster Braukunst über opulent bayrischen Schmankerl bis zur Vielfalt aus Fischen und Meeresfrüchten aus der Norddeutschen Küche. Naturliebhaber, Feinschmecker und natürlich auch Sportler kommen voll auf ihre Kosten.",
                         Difficulty = Difficulty.Easy,
@@ -77,6 +80,7 @@ public class TourFactory
                 Logs = [
                     new TourLog
                     {
+                        Id = Guid.NewGuid(),
                         DateTime = DateTime.Parse("2021-10-25"),
                         Comment = "In diesem charmanten von Bergen umgebenen Ort lohnt sich ein Spaziergang durch das schöne Zentrum. Übernachtungsmöglichkeiten stehen dir in dem Ferienort in allen Formen und Preisklassen zur Verfügung.",
                         Difficulty = Difficulty.Medium,

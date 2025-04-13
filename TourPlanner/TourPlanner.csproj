@@ -10,6 +10,10 @@
 
     <ItemGroup>
       <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
      </ItemGroup>
 
     <ItemGroup>
@@ -40,6 +44,9 @@
       <Content Include="PresentationLayer\Images\c52e645e-09a2-48ce-b7f7-34b418da3145.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

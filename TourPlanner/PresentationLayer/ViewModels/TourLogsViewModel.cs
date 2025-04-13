@@ -41,6 +41,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
         {
             NewTourLog = new TourLog
             {
+                Id = Guid.NewGuid(),
                 DateTime = DateTime.Now,
                 TotalTime = "",
                 TotalDistance = "",
