@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using TourPlanner.Enums;
-using TourPlanner.Models;
-using TourPlanner.ViewModels;
+using TourPlanner.BusinessLayer.Enums;
+using TourPlanner.DataAccessLayer.Models;
+using TourPlanner.PresentationLayer.ViewModels;
 
 namespace Tests.TourPlanner.ViewModels;
 

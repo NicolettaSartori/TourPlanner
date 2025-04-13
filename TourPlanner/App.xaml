@@ -6,8 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Button.xaml"/>
-                <ResourceDictionary Source="Styles/TabControl.xaml"/>
+                <ResourceDictionary Source="PresentationLayer/Styles/Button.xaml"/>
+                <ResourceDictionary Source="PresentationLayer/Styles/TabControl.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

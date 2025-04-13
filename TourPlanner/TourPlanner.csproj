@@ -10,12 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Images\f081a24b-7463-4523-ab29-a3e1ce477150.png" />
-      <None Remove="Images\1e28588e-5990-4cd5-b41f-5d503578fbe8.png" />
-    </ItemGroup>
+     </ItemGroup>
 
     <ItemGroup>
       <Content Include="obj\Debug\net8.0-windows\App.baml" />
@@ -29,20 +24,20 @@
       <Content Include="obj\Debug\net8.0-windows\Windows\EditTourWindow.baml" />
       <Content Include="obj\Debug\net8.0-windows\Windows\NewTourLogWindow.baml" />
       <Content Include="obj\Debug\net8.0-windows\Windows\NewTourWindow.baml" />
-      <None Remove="Images\d53b5c0e-9240-43b3-9b3d-8cefac645f38.png" />
-      <Content Include="Images\d53b5c0e-9240-43b3-9b3d-8cefac645f38.png">
+      <None Remove="PresentationLayer\Images\d53b5c0e-9240-43b3-9b3d-8cefac645f38.png" />
+      <Content Include="PresentationLayer\Images\d53b5c0e-9240-43b3-9b3d-8cefac645f38.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <None Remove="Images\9a9ecb9b-00db-4f5f-8385-0da3df583f44.png" />
-      <Content Include="Images\9a9ecb9b-00db-4f5f-8385-0da3df583f44.png">
+      <None Remove="PresentationLayer\Images\9a9ecb9b-00db-4f5f-8385-0da3df583f44.png" />
+      <Content Include="PresentationLayer\Images\9a9ecb9b-00db-4f5f-8385-0da3df583f44.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <None Remove="Images\8f7cfed4-ae14-4eab-a2bc-881104685598.png" />
-      <Content Include="Images\8f7cfed4-ae14-4eab-a2bc-881104685598.png">
+      <None Remove="PresentationLayer\Images\8f7cfed4-ae14-4eab-a2bc-881104685598.png" />
+      <Content Include="PresentationLayer\Images\8f7cfed4-ae14-4eab-a2bc-881104685598.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <None Remove="Images\c52e645e-09a2-48ce-b7f7-34b418da3145.png" />
-      <Content Include="Images\c52e645e-09a2-48ce-b7f7-34b418da3145.png">
+      <None Remove="PresentationLayer\Images\c52e645e-09a2-48ce-b7f7-34b418da3145.png" />
+      <Content Include="PresentationLayer\Images\c52e645e-09a2-48ce-b7f7-34b418da3145.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using TourPlanner.Models;
-using TourPlanner.Enums;
+using TourPlanner.BusinessLayer.Enums;
+using TourPlanner.DataAccessLayer.Models;
 
 namespace TourPlanner.BusinessLayer.Factories;
 
