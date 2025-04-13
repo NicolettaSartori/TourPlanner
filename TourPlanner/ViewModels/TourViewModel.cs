@@ -24,8 +24,11 @@ namespace TourPlanner.ViewModels
             set
             {
                 SetField(ref _selectedTour, value);
-                ImageUri = $"{ImagePath}{_selectedTour?.Id.ToString()}.png";
-                _tourLogsViewModel.TourLogs = new ObservableCollection<TourLog>(_selectedTour.Logs);
+                if (_selectedTour != null)
+                {
+                    ImageUri = $"{ImagePath}{_selectedTour.Id.ToString()}.png";
+                    _tourLogsViewModel.TourLogs = new ObservableCollection<TourLog>(_selectedTour.Logs); 
+                }
                 OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
@@ -84,8 +87,11 @@ namespace TourPlanner.ViewModels
             {
                 int index = Tours.IndexOf(SelectedTour);
                 Tours.Remove(SelectedTour);
-                // select the tour before 
-                SelectedTour = (index <= 0) ? Tours.FirstOrDefault() : Tours[index - 1];
+                // select the tour before
+                if (Tours.Count == 0)
+                    SelectedTour = null;
+                else
+                    SelectedTour = (index <= 0) ? Tours.FirstOrDefault() : Tours[index - 1];
             }
         }
         
