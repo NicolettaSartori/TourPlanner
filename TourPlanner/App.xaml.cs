@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.Configuration;
 using TourPlanner.DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
+using TourPlanner.BusinessLayer.Enums; 
+using TourPlanner.DataAccessLayer.Models;
 
 namespace TourPlanner;
 
@@ -24,8 +27,25 @@ public partial class App : Application
         // Dev env only
         try
         {
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
+            if (!dbContext.Tours.Any())
+            {
+                dbContext.Tours.Add(new Tour
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Ruhrtal Radweg",
+                    Description = "Von Winterberg nach Meschede",
+                    From = "Winterberg",
+                    To = "Meschede",
+                    TransportType = TransportType.Bike,
+                    Distance = "40,5 km",
+                    EstimatedTime = "2h 27min"
+                });
+                dbContext.SaveChanges();
+            }
+            dbContext.Database.Migrate();
+            
+            //dbContext.Database.EnsureDeleted();
+            //dbContext.Database.EnsureCreated();
         }
         catch (Exception exception)
         {

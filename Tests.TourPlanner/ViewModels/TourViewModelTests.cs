@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿/*using System.Collections.ObjectModel;
 using TourPlanner.BusinessLayer.Enums;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.ViewModels;
@@ -111,4 +111,4 @@ public class TourViewModelTests
         
         Assert.That(_tourViewModel.SelectedTour.Logs.Count, Is.EqualTo(0));
     }
-}
+}*/

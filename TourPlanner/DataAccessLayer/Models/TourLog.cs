@@ -20,4 +20,8 @@ public class TourLog
     [Required, MaxLength(255)]
     public required string? TotalTime { get; set; }
     public int? Rating { get; set; }
+    [Required]
+    public required Guid TourId { get; set; }
+
+    public Tour? Tour { get; set; }
 }

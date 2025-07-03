@@ -2,39 +2,84 @@
 using System.Text.Json;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer.Enums;
-using TourPlanner.BusinessLayer.Factories;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.Windows;
+using TourPlanner.DataAccessLayer.Repositories;
+using TourPlanner.PresentationLayer.Helper;
+using TourPlanner.Services;
+using System.IO;
 
 namespace TourPlanner.PresentationLayer.ViewModels
 {
     public class TourViewModel : NewWindowViewModelBase
     {
-        public ObservableCollection<Tour>? Tours { get; set; }
-        
+        public RelayCommand ExportTourCommand { get; private set; }
+
+
+        private ObservableCollection<Tour>? _tours;
+        public ObservableCollection<Tour>? Tours
+        {
+            get => _tours;
+            set
+            {
+                SetField(ref _tours, value);
+                OnPropertyChanged();
+            }
+        }
+
         private Tour? _selectedTour;
 
         private const string ImagePath = "/PresentationLayer/Images/";
         private readonly TourLogsViewModel _tourLogsViewModel;
+
+        private Task _loadLogsTask = Task.CompletedTask;
+
+        private async void LoadTourLogsForSelectedTour()
+        {
+            await _loadLogsTask;
+
+            if (SelectedTour == null || _tourLogsViewModel?.Repository == null)
+                return;
+
+            _loadLogsTask = _tourLogsViewModel.Repository
+                .GetLogsForTourAsync(SelectedTour.Id)
+                .ContinueWith(task =>
+                {
+                    if (task.Status == TaskStatus.RanToCompletion)
+                    {
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            _tourLogsViewModel.TourLogs = new ObservableCollection<TourLog>(task.Result);
+                            _tourLogsViewModel.TourViewModel = this;
+                        });
+                    }
+                });
+        }
+
 
         public Tour? SelectedTour
         {
             get => _selectedTour;
             set
             {
-                SetField(ref _selectedTour, value);
-                if (_selectedTour != null)
+                if (SetField(ref _selectedTour, value))
                 {
-                    ImageUri = $"{ImagePath}{_selectedTour.Id.ToString()}.png";
-                    _tourLogsViewModel.TourLogs = new ObservableCollection<TourLog>(_selectedTour.Logs); 
+                    ImageUri = _selectedTour != null
+                        ? $"{ImagePath}{_selectedTour.Id}.png"
+                        : string.Empty;
+
+                    LoadTourLogsForSelectedTour();
+
+                    OnPropertyChanged();
+                    ExportTourCommand.RaiseCanExecuteChanged();
+                    CommandManager.InvalidateRequerySuggested();
                 }
-                OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
             }
         }
-        
+
         private string _imageUri;
-        public string ImageUri {
+        public string ImageUri
+        {
             get => _imageUri;
             private set
             {
@@ -42,19 +87,32 @@ namespace TourPlanner.PresentationLayer.ViewModels
                 OnPropertyChanged();
             }
         }
-        
 
-        public Tour? NewTour { get; private set; } 
+        public Tour? NewTour { get; private set; }
         public List<TransportType> TransportTypes { get; } = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().ToList();
 
-        public TourViewModel(TourLogsViewModel tourLogsViewModel)
+        private readonly TourRepository _repository;
+
+        public TourViewModel(TourLogsViewModel tourLogsViewModel, TourRepository repository)
         {
+            _repository = repository;
             _tourLogsViewModel = tourLogsViewModel;
             _tourLogsViewModel.TourViewModel = this;
-            Tours = TourFactory.GetTours();
+
+            Tours = _repository.GetAllTours() ?? new ObservableCollection<Tour>();
+
+            // Befehl zuerst initialisieren, damit SelectedTour ihn verwenden kann
+            ExportTourCommand = new RelayCommand(ExportSelectedTourAsPdf, () => this.SelectedTour != null);
+
             SelectedTour = Tours.FirstOrDefault();
+
+            if (SelectedTour != null)
+            {
+                LoadTourLogsForSelectedTour();
+            }
         }
-        
+
+
         protected override void AddItem()
         {
             NewTour = new Tour
@@ -79,32 +137,39 @@ namespace TourPlanner.PresentationLayer.ViewModels
             if (SelectedTour != null && Tours != null)
                 SelectedTour.Logs.Add(tourLog);
         }
-        
-        protected override void DeleteItem()
+
+        protected override async void DeleteItem()
         {
             if (SelectedTour != null && Tours != null)
             {
-                int index = Tours.IndexOf(SelectedTour);
-                Tours.Remove(SelectedTour);
-                // select the tour before
-                if (Tours.Count == 0)
-                    SelectedTour = null;
-                else
-                    SelectedTour = (index <= 0) ? Tours.FirstOrDefault() : Tours[index - 1];
+                var tourToRemove = SelectedTour;
+
+                await _repository.DeleteTourAsync(tourToRemove.Id);
+
+                int index = Tours.IndexOf(tourToRemove);
+                Tours.Remove(tourToRemove);
+
+                SelectedTour = Tours.Count == 0
+                    ? null
+                    : (index <= 0 ? Tours.FirstOrDefault() : Tours[index - 1]);
+
+                OnPropertyChanged(nameof(Tours));
+                OnPropertyChanged(nameof(SelectedTour));
             }
         }
-        
+
         public void DeleteTourLogFromSelected(TourLog log)
         {
             _selectedTour?.Logs.Remove(log);
             OnPropertyChanged(nameof(SelectedTour));
         }
-        
+
         protected override void Save()
         {
             if (NewTour != null)
             {
                 NewTour.Id = Guid.NewGuid();
+                _repository.AddTour(NewTour);
                 Tours?.Add(NewTour);
                 SelectedTour = NewTour;
                 CloseWindow();
@@ -141,11 +206,12 @@ namespace TourPlanner.PresentationLayer.ViewModels
             NewWindow.DataContext = this;
             NewWindow.ShowDialog();
         }
-        
-        protected override void UpdateItem()
+
+        protected override async void UpdateItem()
         {
             if (NewTour != null && SelectedTour != null)
             {
+                await _repository.UpdateTourAsync(NewTour);
                 Tours[Tours.IndexOf(SelectedTour)] = NewTour;
                 SelectedTour = NewTour;
                 Console.WriteLine($"Tour {SelectedTour.Name} wurde aktualisiert.");
@@ -163,11 +229,26 @@ namespace TourPlanner.PresentationLayer.ViewModels
                    !string.IsNullOrWhiteSpace(SelectedTour.EstimatedTime) &&
                    !string.IsNullOrWhiteSpace(SelectedTour.Description);
         }
-        
+
         protected override void CloseWindow()
         {
             NewTour = null;
             NewWindow?.Close();
+        }
+
+        private void ExportSelectedTourAsPdf()
+        {
+            if (SelectedTour == null)
+                return;
+
+            var pdfService = new PdfExportService();
+
+            string fileName = $"Tour_{SelectedTour.Name}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
+
+            pdfService.ExportTour(SelectedTour, filePath);
+
+            Console.WriteLine($"PDF wurde erstellt: {filePath}");
         }
     }
 }

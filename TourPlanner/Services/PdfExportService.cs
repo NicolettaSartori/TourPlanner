@@ -1,0 +1,62 @@
+﻿using PdfSharpCore.Pdf;
+using PdfSharpCore.Drawing;
+using System.IO;
+using System;
+using TourPlanner.DataAccessLayer.Models;
+
+namespace TourPlanner.Services
+{
+    public class PdfExportService
+    {
+        public void ExportTour(Tour tour, string filePath)
+{
+    try
+    {
+        var document = new PdfDocument();
+        var page = document.AddPage();
+        var gfx = XGraphics.FromPdfPage(page);
+
+        var titleFont = new XFont("Verdana", 20, XFontStyle.Bold);
+        var bodyFont = new XFont("Verdana", 12, XFontStyle.Regular);
+
+        var titleFormat = new XStringFormat
+        {
+            Alignment = XStringAlignment.Center,
+            LineAlignment = XLineAlignment.Near
+        };
+
+        // Titel
+        gfx.DrawString("Tour Report", titleFont, XBrushes.Black,
+            new XRect(0, 20, page.Width, 40), titleFormat);
+
+        // Content
+        int y = 80;
+        gfx.DrawString($"Name: {tour.Name}", bodyFont, XBrushes.Black, new XPoint(40, y += 20));
+        gfx.DrawString($"From: {tour.From}", bodyFont, XBrushes.Black, new XPoint(40, y += 20));
+        gfx.DrawString($"To: {tour.To}", bodyFont, XBrushes.Black, new XPoint(40, y += 20));
+        gfx.DrawString($"Distance: {tour.Distance}", bodyFont, XBrushes.Black, new XPoint(40, y += 20));
+        gfx.DrawString($"Estimated Time: {tour.EstimatedTime}", bodyFont, XBrushes.Black, new XPoint(40, y += 20));
+        gfx.DrawString($"Transport: {tour.TransportType}", bodyFont, XBrushes.Black, new XPoint(40, y += 20));
+
+        gfx.DrawString("Description:", bodyFont, XBrushes.Black, new XPoint(40, y += 30));
+
+        var descFormat = new XStringFormat
+        {
+            Alignment = XStringAlignment.Near,
+            LineAlignment = XLineAlignment.Near
+        };
+
+        gfx.DrawString(tour.Description ?? "-", bodyFont, XBrushes.Black,
+            new XRect(40, y + 10, page.Width - 80, page.Height - y - 50), descFormat);
+
+        using var stream = File.Create(filePath);
+        document.Save(stream);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"PDF export failed: {ex.Message}");
+    }
+}
+
+    }
+}

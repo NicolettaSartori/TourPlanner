@@ -4,11 +4,21 @@ using System.Windows.Input;
 using TourPlanner.BusinessLayer.Enums;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.Windows;
+using TourPlanner.DataAccessLayer.Repositories;
 
 namespace TourPlanner.PresentationLayer.ViewModels
 {
     public class TourLogsViewModel : NewWindowViewModelBase
     {
+        public TourLogRepository Repository => _repository;
+
+        private readonly TourLogRepository _repository;
+
+        public TourLogsViewModel(TourLogRepository repository)
+        {
+            _repository = repository;
+        }
+
         private ObservableCollection<TourLog> _tourLogs = [];
         public ObservableCollection<TourLog> TourLogs
         {
@@ -31,38 +41,47 @@ namespace TourPlanner.PresentationLayer.ViewModels
                 CommandManager.InvalidateRequerySuggested();
             }
         }
+
         public TourLog? NewTourLog { get; private set; }
         public TourViewModel? TourViewModel { get; set; }
-        
+
         public List<Difficulty> Difficulties { get; } = Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().ToList();
         public List<int> Ratings { get; } = [1, 2, 3, 4, 5];
-        
+
         protected override void AddItem()
         {
+            if (TourViewModel?.SelectedTour == null)
+                return;
+
             NewTourLog = new TourLog
             {
                 Id = Guid.NewGuid(),
-                DateTime = DateTime.Now,
+                DateTime = DateTime.UtcNow,
                 TotalTime = "",
                 TotalDistance = "",
+                TourId = TourViewModel.SelectedTour.Id,
+                Difficulty = Difficulty.Medium
             };
 
-            NewWindow = new NewTourLogWindow();
-            NewWindow.DataContext = this;
+            NewWindow = new NewTourLogWindow
+            {
+                DataContext = this
+            };
             NewWindow.ShowDialog();
         }
 
-        protected override void Save()
+        protected override async void Save()
         {
-            if (NewTourLog == null)
+            if (NewTourLog == null || TourViewModel?.SelectedTour == null)
                 return;
-            
-            TourViewModel?.AddTourLogToSelected(NewTourLog);
+
+            await _repository.AddTourLogAsync(NewTourLog, TourViewModel.SelectedTour.Id);
+            TourViewModel.AddTourLogToSelected(NewTourLog);
             TourLogs.Add(NewTourLog);
             SelectedTourLog = NewTourLog;
             CloseWindow();
         }
-        
+
         protected override bool CanSave()
         {
             return NewTourLog != null &&
@@ -85,19 +104,39 @@ namespace TourPlanner.PresentationLayer.ViewModels
         {
             if (SelectedTourLog == null) return;
 
-            NewTourLog = JsonSerializer.Deserialize<TourLog>(JsonSerializer.Serialize(SelectedTourLog));
-            NewWindow = new EditTourLogWindow();
-            NewWindow.DataContext = this;
+            NewTourLog = new TourLog
+            {
+                Id = SelectedTourLog.Id,
+                DateTime = SelectedTourLog.DateTime,
+                Comment = SelectedTourLog.Comment,
+                Difficulty = SelectedTourLog.Difficulty,
+                TotalDistance = SelectedTourLog.TotalDistance,
+                TotalTime = SelectedTourLog.TotalTime,
+                Rating = SelectedTourLog.Rating,
+                TourId = SelectedTourLog.TourId
+            };
+
+            NewWindow = new EditTourLogWindow
+            {
+                DataContext = this
+            };
             NewWindow.ShowDialog();
         }
 
-        protected override void UpdateItem()
+
+        protected override async void UpdateItem()
         {
             if (SelectedTourLog != null && NewTourLog != null)
             {
-                TourLogs[TourLogs.IndexOf(SelectedTourLog)] = NewTourLog;
-                SelectedTourLog = NewTourLog;
-                Console.WriteLine($"Tour Log {SelectedTourLog.DateTime} wurde aktualisiert.");
+                await _repository.UpdateTourLogAsync(NewTourLog);
+
+                int index = TourLogs.IndexOf(SelectedTourLog);
+                if (index >= 0)
+                {
+                    TourLogs[index] = NewTourLog;
+                    SelectedTourLog = NewTourLog;
+                }
+
                 CloseWindow();
             }
         }
@@ -109,10 +148,11 @@ namespace TourPlanner.PresentationLayer.ViewModels
                    !string.IsNullOrWhiteSpace(SelectedTourLog.TotalDistance);
         }
 
-        protected override void DeleteItem()
+        protected override async void DeleteItem()
         {
             if (SelectedTourLog != null)
             {
+                await _repository.DeleteTourLogAsync(SelectedTourLog.Id);
                 TourViewModel?.DeleteTourLogFromSelected(SelectedTourLog);
                 TourLogs.Remove(SelectedTourLog);
             }
