@@ -12,12 +12,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
     {
         public TourLogRepository Repository => _repository;
 
-        private readonly TourLogRepository _repository;
-
-        public TourLogsViewModel(TourLogRepository repository)
-        {
-            _repository = repository;
-        }
+        private readonly TourLogRepository _repository = new();
 
         private ObservableCollection<TourLog> _tourLogs = [];
         public ObservableCollection<TourLog> TourLogs

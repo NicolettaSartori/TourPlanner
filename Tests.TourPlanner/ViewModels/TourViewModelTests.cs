@@ -1,4 +1,4 @@
-﻿/*using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using TourPlanner.BusinessLayer.Enums;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.ViewModels;
@@ -104,6 +104,7 @@ public class TourViewModelTests
                 TotalDistance = "45,4 km",
                 TotalTime = "2h 30min",
                 Rating = 5,
+                TourId = Guid.Parse("d53b5c0e-9240-43b3-9b3d-8cefac645f38"),
             },
         ];
             
@@ -111,4 +112,4 @@ public class TourViewModelTests
         
         Assert.That(_tourViewModel.SelectedTour.Logs.Count, Is.EqualTo(0));
     }
-}*/
+}

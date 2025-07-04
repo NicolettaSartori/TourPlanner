@@ -5,15 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TourPlanner.DataAccessLayer.Repositories
 {
-    public class TourLogRepository
+    public class TourLogRepository : RepositoryBase
     {
-        private readonly AppdDbContext _dbContext;
-
-        public TourLogRepository(AppdDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         /// <summary>
         /// Adds a new tour log entry for a specific tour.
         /// </summary>
@@ -23,8 +16,8 @@ namespace TourPlanner.DataAccessLayer.Repositories
             log.TourId = tourId;
             log.DateTime = log.DateTime.ToUniversalTime();
 
-            await _dbContext.TourLogs.AddAsync(log);
-            await _dbContext.SaveChangesAsync();
+            await Context.TourLogs.AddAsync(log);
+            await Context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -32,7 +25,7 @@ namespace TourPlanner.DataAccessLayer.Repositories
         /// </summary>
         public async Task UpdateTourLogAsync(TourLog log)
         {
-            var existingLog = await _dbContext.TourLogs.FirstOrDefaultAsync(l => l.Id == log.Id);
+            var existingLog = await Context.TourLogs.FirstOrDefaultAsync(l => l.Id == log.Id);
             if (existingLog == null)
                 return;
 
@@ -45,13 +38,13 @@ namespace TourPlanner.DataAccessLayer.Repositories
             existingLog.Rating = log.Rating;
             existingLog.TourId = log.TourId;
 
-            await _dbContext.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
 
         
         public async Task<List<TourLog>> GetLogsForTourAsync(Guid tourId)
         {
-            return await _dbContext.TourLogs
+            return await Context.TourLogs
                 .Where(log => log.TourId == tourId)
                 .ToListAsync();
         }
@@ -62,11 +55,11 @@ namespace TourPlanner.DataAccessLayer.Repositories
         /// </summary>
         public async Task DeleteTourLogAsync(Guid logId)
         {
-            var log = await _dbContext.TourLogs.FindAsync(logId);
+            var log = await Context.TourLogs.FindAsync(logId);
             if (log != null)
             {
-                _dbContext.TourLogs.Remove(log);
-                await _dbContext.SaveChangesAsync();
+                Context.TourLogs.Remove(log);
+                await Context.SaveChangesAsync();
             }
         }
     }

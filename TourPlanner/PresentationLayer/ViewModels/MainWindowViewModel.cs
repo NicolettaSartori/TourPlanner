@@ -12,12 +12,8 @@ namespace TourPlanner.PresentationLayer.ViewModels
 
         public MainWindowViewModel()
         {
-            var dbContextFactory = new AppdDbContextFactory();
-            var tourRepository = new TourRepository(dbContextFactory.CreateDbContext());
-            var tourLogRepository = new TourLogRepository(dbContextFactory.CreateDbContext());
-
-            TourLogsVm = new TourLogsViewModel(tourLogRepository);
-            TourVm = new TourViewModel(TourLogsVm, tourRepository);
+            TourLogsVm = new TourLogsViewModel();
+            TourVm = new TourViewModel(TourLogsVm);
             NavbarVM = new NavbarViewModel();
             InputVM = new InputWithButtonViewModel();
         }

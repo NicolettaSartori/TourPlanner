@@ -66,9 +66,9 @@ namespace TourPlanner.PresentationLayer.ViewModels
             }
         }
         
-        public TourViewModel(TourLogsViewModel tourLogsViewModel, TourRepository repository)
+        public TourViewModel(TourLogsViewModel tourLogsViewModel)
         {
-            _repository = repository;
+            _repository = new TourRepository();
             _tourLogsViewModel = tourLogsViewModel;
             _tourLogsViewModel.TourViewModel = this;
             
