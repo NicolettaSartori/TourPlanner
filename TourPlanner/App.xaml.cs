@@ -1,9 +1,7 @@
 ﻿using System.Windows;
-using Microsoft.Extensions.Configuration;
 using TourPlanner.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
-using TourPlanner.BusinessLayer.Enums; 
-using TourPlanner.DataAccessLayer.Models;
+using TourPlanner.BusinessLayer.Factories;
 
 namespace TourPlanner;
 
@@ -16,11 +14,12 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .Build();
-
-        using AppdDbContext dbContext = new(configuration);
+        var dbContextFactory = new AppdDbContextFactory();
+        using AppdDbContext dbContext = dbContextFactory.CreateDbContext();
+        
+        // dbContext.Database.EnsureDeleted();
+        dbContext.Database.EnsureCreated();
+        
         // Prod env
         // context.Database.Migrate();
 
@@ -29,23 +28,13 @@ public partial class App : Application
         {
             if (!dbContext.Tours.Any())
             {
-                dbContext.Tours.Add(new Tour
+                foreach (var tour in TourFactory.GetTours())
                 {
-                    Id = Guid.NewGuid(),
-                    Name = "Ruhrtal Radweg",
-                    Description = "Von Winterberg nach Meschede",
-                    From = "Winterberg",
-                    To = "Meschede",
-                    TransportType = TransportType.Bike,
-                    Distance = "40,5 km",
-                    EstimatedTime = "2h 27min"
-                });
+                    dbContext.Tours.Add(tour);
+                }
                 dbContext.SaveChanges();
             }
             dbContext.Database.Migrate();
-            
-            //dbContext.Database.EnsureDeleted();
-            //dbContext.Database.EnsureCreated();
         }
         catch (Exception exception)
         {
