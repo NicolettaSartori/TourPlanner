@@ -201,7 +201,6 @@ namespace TourPlanner.PresentationLayer.ViewModels
                 await _service.UpdateTourAsync(NewTour);
                 Tours[Tours.IndexOf(SelectedTour)] = NewTour;
                 SelectedTour = NewTour;
-                Console.WriteLine($"Tour {SelectedTour.Name} wurde aktualisiert.");
                 CloseWindow();
             }
         }

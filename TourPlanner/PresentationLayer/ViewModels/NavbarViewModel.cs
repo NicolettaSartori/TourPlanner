@@ -36,7 +36,6 @@ namespace TourPlanner.PresentationLayer.ViewModels
 
         private void ExecuteMenuItemCommand(string menuItem)
         {
-            Console.WriteLine($"Menu item clicked: {menuItem}");
         }
     }
 }

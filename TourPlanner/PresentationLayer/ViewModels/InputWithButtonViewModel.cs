@@ -22,7 +22,6 @@ namespace TourPlanner.PresentationLayer.ViewModels
 
         private void ExecuteSearch()
         {
-            Console.WriteLine($"Suche nach: {SearchText}");
         }
     }
 }

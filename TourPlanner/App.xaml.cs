@@ -1,7 +1,9 @@
 ﻿using System.Windows;
 using TourPlanner.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TourPlanner.BusinessLayer.Factories;
+using TourPlanner.Infrastructure;
 
 namespace TourPlanner;
 
@@ -14,6 +16,15 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false)
+            .Build();
+        
+        var logConfigPath = configuration["Logging:Log4NetConfigPath"];
+        if (logConfigPath != null)
+            LoggerHelper.Initialize(logConfigPath);
+        
         var dbContextFactory = new AppdDbContextFactory();
         using AppdDbContext dbContext = dbContextFactory.CreateDbContext();
         
@@ -38,9 +49,7 @@ public partial class App : Application
         }
         catch (Exception exception)
         {
-            Console.WriteLine("Error while trying to create database:");
-            Console.WriteLine(exception);
+            LoggerHelper.GetLogger(typeof(App)).Error("Error while trying to create database: " + exception.Message);
         }
-
     }
 }

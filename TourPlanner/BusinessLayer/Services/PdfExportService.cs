@@ -2,6 +2,7 @@
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using TourPlanner.DataAccessLayer.Models;
+using TourPlanner.Infrastructure;
 
 namespace TourPlanner.BusinessLayer.Services
 {
@@ -53,12 +54,10 @@ namespace TourPlanner.BusinessLayer.Services
 
                 using var stream = File.Create(filePath);
                 document.Save(stream);
-                
-                Console.WriteLine($"PDF for Tour {tour.Name} was generated");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"PDF export failed: {ex.Message}");
+                LoggerHelper.GetLogger(typeof(PdfExportService)).Error($"PDF export for the tour [{tour.Id}] failed: {ex.Message}");
             }
         }
     }
