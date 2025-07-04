@@ -41,7 +41,7 @@
                 </Label>
                 
                 <Button Content="PDF"
-                        Command="{Binding ExportTourCommand}"
+                        Command="{Binding ExportCommand}"
                         Margin="0,10,0,0"
                         Width="100"
                         HorizontalAlignment="Left" />

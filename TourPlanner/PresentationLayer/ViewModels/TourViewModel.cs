@@ -5,17 +5,14 @@ using TourPlanner.BusinessLayer.Enums;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.Windows;
 using TourPlanner.DataAccessLayer.Repositories;
-using TourPlanner.PresentationLayer.Helper;
 using TourPlanner.Services;
 using System.IO;
+using TourPlanner.PresentationLayer.MVVM;
 
 namespace TourPlanner.PresentationLayer.ViewModels
 {
     public class TourViewModel : NewWindowViewModelBase
     {
-        public RelayCommand ExportTourCommand { get; private set; }
-
-
         private ObservableCollection<Tour>? _tours;
         public ObservableCollection<Tour>? Tours
         {
@@ -33,7 +30,60 @@ namespace TourPlanner.PresentationLayer.ViewModels
         private readonly TourLogsViewModel _tourLogsViewModel;
 
         private Task _loadLogsTask = Task.CompletedTask;
+        
+        public Tour? NewTour { get; private set; }
+        public List<TransportType> TransportTypes { get; } = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().ToList();
 
+        private readonly TourRepository _repository;
+        
+        public ICommand ExportCommand { get; }
+
+        public Tour? SelectedTour
+        {
+            get => _selectedTour;
+            set
+            {
+                if (SetField(ref _selectedTour, value))
+                {
+                    ImageUri = _selectedTour != null
+                        ? $"{ImagePath}{_selectedTour.Id}.png"
+                        : string.Empty;
+
+                    LoadTourLogsForSelectedTour();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _imageUri;
+        public string ImageUri
+        {
+            get => _imageUri;
+            private set
+            {
+                _imageUri = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public TourViewModel(TourLogsViewModel tourLogsViewModel, TourRepository repository)
+        {
+            _repository = repository;
+            _tourLogsViewModel = tourLogsViewModel;
+            _tourLogsViewModel.TourViewModel = this;
+            
+            ExportCommand = new RelayCommand(_ => ExportItem());
+
+            Tours = _repository.GetAllTours();
+
+            SelectedTour = Tours.FirstOrDefault();
+
+            if (SelectedTour != null)
+            {
+                LoadTourLogsForSelectedTour();
+            }
+        }
+        
         private async void LoadTourLogsForSelectedTour()
         {
             await _loadLogsTask;
@@ -55,63 +105,6 @@ namespace TourPlanner.PresentationLayer.ViewModels
                     }
                 });
         }
-
-
-        public Tour? SelectedTour
-        {
-            get => _selectedTour;
-            set
-            {
-                if (SetField(ref _selectedTour, value))
-                {
-                    ImageUri = _selectedTour != null
-                        ? $"{ImagePath}{_selectedTour.Id}.png"
-                        : string.Empty;
-
-                    LoadTourLogsForSelectedTour();
-
-                    OnPropertyChanged();
-                    ExportTourCommand.RaiseCanExecuteChanged();
-                    CommandManager.InvalidateRequerySuggested();
-                }
-            }
-        }
-
-        private string _imageUri;
-        public string ImageUri
-        {
-            get => _imageUri;
-            private set
-            {
-                _imageUri = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Tour? NewTour { get; private set; }
-        public List<TransportType> TransportTypes { get; } = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().ToList();
-
-        private readonly TourRepository _repository;
-
-        public TourViewModel(TourLogsViewModel tourLogsViewModel, TourRepository repository)
-        {
-            _repository = repository;
-            _tourLogsViewModel = tourLogsViewModel;
-            _tourLogsViewModel.TourViewModel = this;
-
-            Tours = _repository.GetAllTours() ?? new ObservableCollection<Tour>();
-
-            // Befehl zuerst initialisieren, damit SelectedTour ihn verwenden kann
-            ExportTourCommand = new RelayCommand(ExportSelectedTourAsPdf, () => this.SelectedTour != null);
-
-            SelectedTour = Tours.FirstOrDefault();
-
-            if (SelectedTour != null)
-            {
-                LoadTourLogsForSelectedTour();
-            }
-        }
-
 
         protected override void AddItem()
         {
@@ -230,13 +223,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
                    !string.IsNullOrWhiteSpace(SelectedTour.Description);
         }
 
-        protected override void CloseWindow()
-        {
-            NewTour = null;
-            NewWindow?.Close();
-        }
-
-        private void ExportSelectedTourAsPdf()
+        private void ExportItem()
         {
             if (SelectedTour == null)
                 return;
@@ -249,6 +236,12 @@ namespace TourPlanner.PresentationLayer.ViewModels
             pdfService.ExportTour(SelectedTour, filePath);
 
             Console.WriteLine($"PDF wurde erstellt: {filePath}");
+        }
+
+        protected override void CloseWindow()
+        {
+            NewTour = null;
+            NewWindow?.Close();
         }
     }
 }
