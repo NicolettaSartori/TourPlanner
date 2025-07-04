@@ -22,6 +22,4 @@ public class TourLog
     public int? Rating { get; set; }
     [Required]
     public required Guid TourId { get; set; }
-
-    public Tour? Tour { get; set; }
 }
