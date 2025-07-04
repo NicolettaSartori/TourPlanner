@@ -1,19 +1,14 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer.Enums;
+using TourPlanner.BusinessLayer.Services;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.Windows;
-using TourPlanner.DataAccessLayer.Repositories;
 
 namespace TourPlanner.PresentationLayer.ViewModels
 {
     public class TourLogsViewModel : NewWindowViewModelBase
     {
-        public TourLogRepository Repository => _repository;
-
-        private readonly TourLogRepository _repository = new();
-
         private ObservableCollection<TourLog> _tourLogs = [];
         public ObservableCollection<TourLog> TourLogs
         {
@@ -39,6 +34,8 @@ namespace TourPlanner.PresentationLayer.ViewModels
 
         public TourLog? NewTourLog { get; private set; }
         public TourViewModel? TourViewModel { get; set; }
+        
+        private readonly TourLogService _service = new();
 
         public List<Difficulty> Difficulties { get; } = Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().ToList();
         public List<int> Ratings { get; } = [1, 2, 3, 4, 5];
@@ -70,7 +67,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             if (NewTourLog == null || TourViewModel?.SelectedTour == null)
                 return;
 
-            await _repository.AddTourLogAsync(NewTourLog, TourViewModel.SelectedTour.Id);
+            await _service.AddTourLogAsync(NewTourLog, TourViewModel.SelectedTour.Id);
             TourViewModel.AddTourLogToSelected(NewTourLog);
             TourLogs.Add(NewTourLog);
             SelectedTourLog = NewTourLog;
@@ -123,7 +120,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
         {
             if (SelectedTourLog != null && NewTourLog != null)
             {
-                await _repository.UpdateTourLogAsync(NewTourLog);
+                await _service.UpdateTourLogAsync(NewTourLog);
 
                 int index = TourLogs.IndexOf(SelectedTourLog);
                 if (index >= 0)
@@ -147,7 +144,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
         {
             if (SelectedTourLog != null)
             {
-                await _repository.DeleteTourLogAsync(SelectedTourLog.Id);
+                await _service.DeleteTourLogAsync(SelectedTourLog.Id);
                 TourViewModel?.DeleteTourLogFromSelected(SelectedTourLog);
                 TourLogs.Remove(SelectedTourLog);
             }

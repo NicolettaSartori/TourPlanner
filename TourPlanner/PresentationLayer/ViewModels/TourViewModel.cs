@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer.Enums;
 using TourPlanner.DataAccessLayer.Models;
 using TourPlanner.PresentationLayer.Windows;
-using TourPlanner.DataAccessLayer.Repositories;
-using TourPlanner.Services;
-using System.IO;
+using TourPlanner.BusinessLayer.Services;
 using TourPlanner.PresentationLayer.MVVM;
 
 namespace TourPlanner.PresentationLayer.ViewModels
@@ -29,12 +28,10 @@ namespace TourPlanner.PresentationLayer.ViewModels
         private const string ImagePath = "/PresentationLayer/Images/";
         private readonly TourLogsViewModel _tourLogsViewModel;
 
-        private Task _loadLogsTask = Task.CompletedTask;
-        
         public Tour? NewTour { get; private set; }
         public List<TransportType> TransportTypes { get; } = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().ToList();
-
-        private readonly TourRepository _repository;
+        
+        private readonly TourService _service = new();
         
         public ICommand ExportCommand { get; }
 
@@ -68,13 +65,12 @@ namespace TourPlanner.PresentationLayer.ViewModels
         
         public TourViewModel(TourLogsViewModel tourLogsViewModel)
         {
-            _repository = new TourRepository();
             _tourLogsViewModel = tourLogsViewModel;
             _tourLogsViewModel.TourViewModel = this;
             
             ExportCommand = new RelayCommand(_ => ExportItem());
 
-            Tours = _repository.GetAllTours();
+            Tours = new ObservableCollection<Tour>(_service.GetTours());
 
             SelectedTour = Tours.FirstOrDefault();
 
@@ -86,18 +82,16 @@ namespace TourPlanner.PresentationLayer.ViewModels
         
         private async void LoadTourLogsForSelectedTour()
         {
-            await _loadLogsTask;
-
-            if (SelectedTour == null || _tourLogsViewModel?.Repository == null)
+            if (_selectedTour == null)
                 return;
 
-            _loadLogsTask = _tourLogsViewModel.Repository
-                .GetLogsForTourAsync(SelectedTour.Id)
+            await _service
+                .GetLogsAsync(_selectedTour.Id)
                 .ContinueWith(task =>
                 {
                     if (task.Status == TaskStatus.RanToCompletion)
                     {
-                        App.Current.Dispatcher.Invoke(() =>
+                        Application.Current.Dispatcher.Invoke(() =>
                         {
                             _tourLogsViewModel.TourLogs = new ObservableCollection<TourLog>(task.Result);
                             _tourLogsViewModel.TourViewModel = this;
@@ -137,7 +131,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             {
                 var tourToRemove = SelectedTour;
 
-                await _repository.DeleteTourAsync(tourToRemove.Id);
+                await _service.DeleteTourAsync(tourToRemove.Id);
 
                 int index = Tours.IndexOf(tourToRemove);
                 Tours.Remove(tourToRemove);
@@ -157,12 +151,12 @@ namespace TourPlanner.PresentationLayer.ViewModels
             OnPropertyChanged(nameof(SelectedTour));
         }
 
-        protected override void Save()
+        protected override async void Save()
         {
             if (NewTour != null)
             {
                 NewTour.Id = Guid.NewGuid();
-                _repository.AddTour(NewTour);
+                await _service.AddTourAsync(NewTour);
                 Tours?.Add(NewTour);
                 SelectedTour = NewTour;
                 CloseWindow();
@@ -204,7 +198,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
         {
             if (NewTour != null && SelectedTour != null)
             {
-                await _repository.UpdateTourAsync(NewTour);
+                await _service.UpdateTourAsync(NewTour);
                 Tours[Tours.IndexOf(SelectedTour)] = NewTour;
                 SelectedTour = NewTour;
                 Console.WriteLine($"Tour {SelectedTour.Name} wurde aktualisiert.");
@@ -228,14 +222,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             if (SelectedTour == null)
                 return;
 
-            var pdfService = new PdfExportService();
-
-            string fileName = $"Tour_{SelectedTour.Name}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
-            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
-
-            pdfService.ExportTour(SelectedTour, filePath);
-
-            Console.WriteLine($"PDF wurde erstellt: {filePath}");
+            _service.ExportTour(SelectedTour);
         }
 
         protected override void CloseWindow()

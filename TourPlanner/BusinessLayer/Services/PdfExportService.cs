@@ -1,15 +1,17 @@
-﻿using PdfSharpCore.Pdf;
+﻿using System.IO;
 using PdfSharpCore.Drawing;
-using System.IO;
-using System;
+using PdfSharpCore.Pdf;
 using TourPlanner.DataAccessLayer.Models;
 
-namespace TourPlanner.Services
+namespace TourPlanner.BusinessLayer.Services
 {
     public class PdfExportService
     {
-        public void ExportTour(Tour tour, string filePath)
+        public void ExportTour(Tour tour)
         {
+            string fileName = $"Tour_{tour.Name}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
+            
             try
             {
                 var document = new PdfDocument();
@@ -51,6 +53,8 @@ namespace TourPlanner.Services
 
                 using var stream = File.Create(filePath);
                 document.Save(stream);
+                
+                Console.WriteLine($"PDF for Tour {tour.Name} was generated");
             }
             catch (Exception ex)
             {

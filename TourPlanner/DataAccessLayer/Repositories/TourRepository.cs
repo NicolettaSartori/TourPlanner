@@ -1,20 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
 using TourPlanner.DataAccessLayer.Models;
 
 namespace TourPlanner.DataAccessLayer.Repositories;
 
 public class TourRepository : RepositoryBase
 {
-    public ObservableCollection<Tour> GetAllTours()
+    public List<Tour> GetAllTours()
     {
-        return new ObservableCollection<Tour>(Context.Tours.ToList());
+        return Context.Tours.ToList();
     }
-
-    public void AddTour(Tour tour)
+    
+    public async Task<List<Tour>> GetAllToursAsync()
     {
-        Context.Tours.Add(tour);
-        Context.SaveChanges();
+        return await Context.Tours.ToListAsync();
     }
 
     public async Task AddTourAsync(Tour tour)
