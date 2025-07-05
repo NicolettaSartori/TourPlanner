@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:local="clr-namespace:TourPlanner.PresentationLayer.Views"
              xmlns:vm="clr-namespace:TourPlanner.PresentationLayer.ViewModels"
              mc:Ignorable="d"
@@ -68,7 +69,14 @@
         </TabItem>
         <TabItem Header="Route">
             <Border BorderBrush="Black" BorderThickness="1" Margin="8">
-                <Image Source="{Binding ImageUri}" Height="400" />
+                <wv2:WebView2
+                    x:Name="RouteWebView"
+                    Source="{Binding ImageUri}"
+                    Height="400"
+                    Width="Auto"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+
             </Border>
         </TabItem>
         <TabItem Header="Comments">

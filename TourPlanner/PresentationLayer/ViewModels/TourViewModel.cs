@@ -43,13 +43,39 @@ namespace TourPlanner.PresentationLayer.ViewModels
             {
                 if (SetField(ref _selectedTour, value))
                 {
-                    ImageUri = _selectedTour != null
-                        ? $"{ImagePath}{_selectedTour.Id}.png"
-                        : string.Empty;
-
                     LoadTourLogsForSelectedTour();
+                    UpdateImageUri(); 
+                    
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        private async void UpdateImageUri()
+        {
+            if (_selectedTour != null &&
+                !string.IsNullOrWhiteSpace(_selectedTour.From) &&
+                !string.IsNullOrWhiteSpace(_selectedTour.To))
+            {
+                try
+                {
+                    var fromCoords = await _routeService.GetCoordinatesAsync(_selectedTour.From);
+                    var toCoords = await _routeService.GetCoordinatesAsync(_selectedTour.To);
+
+                    var html = MapService.GenerateMapHtml(fromCoords, toCoords);
+                    var path = await MapService.SaveHtmlToTempFileAsync(html);
+
+                    ImageUri = path;
+                }
+                catch (Exception ex)
+                {
+                    ImageUri = await MapService.GenerateErrorHtmlAsync("Fehler beim Erstellen der Karte");
+                    Console.WriteLine("Kartenfehler: " + ex.Message);
+                }
+            }
+            else
+            {
+                ImageUri = await MapService.GenerateErrorHtmlAsync("Ungültige Adressen");
             }
         }
 
@@ -64,11 +90,14 @@ namespace TourPlanner.PresentationLayer.ViewModels
             }
         }
         
-        public TourViewModel(TourLogsViewModel tourLogsViewModel)
+        private readonly OpenRouteServiceClient _routeService;
+       
+        public TourViewModel(TourLogsViewModel tourLogsViewModel, OpenRouteServiceClient routeService)
         {
+            _routeService = routeService;
             _tourLogsViewModel = tourLogsViewModel;
             _tourLogsViewModel.TourViewModel = this;
-            
+
             ExportCommand = new RelayCommand(_ => ExportItem());
             RandomCommand = new RelayCommand(_ => GetRandomItem());
 
@@ -81,7 +110,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
                 LoadTourLogsForSelectedTour();
             }
         }
-        
+
         private async void LoadTourLogsForSelectedTour()
         {
             if (_selectedTour == null)
@@ -164,7 +193,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
                 CloseWindow();
             }
         }
-
+        
         public override bool CanSave()
         {
             return NewTour != null &&

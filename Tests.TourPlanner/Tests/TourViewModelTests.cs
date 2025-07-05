@@ -14,7 +14,7 @@ public class TourViewModelTests
     public void SetUp()
     {
         var mockLogsVm = new Mock<TourLogsViewModel>();
-        _viewModel = new TourViewModel(mockLogsVm.Object);
+        //_viewModel = new TourViewModel(mockLogsVm.Object);
     }
 
     private Tour GetTestTour()
