@@ -28,7 +28,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
         private const string ImagePath = "/PresentationLayer/Images/";
         private readonly TourLogsViewModel _tourLogsViewModel;
 
-        public Tour? NewTour { get; private set; }
+        public Tour? NewTour { get; set; }
         public List<TransportType> TransportTypes { get; } = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().ToList();
         
         private readonly TourService _service = new();
@@ -165,7 +165,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             }
         }
 
-        protected override bool CanSave()
+        public override bool CanSave()
         {
             return NewTour != null &&
                    !string.IsNullOrWhiteSpace(NewTour.Name) &&
@@ -176,12 +176,12 @@ namespace TourPlanner.PresentationLayer.ViewModels
                    !string.IsNullOrWhiteSpace(NewTour.Description);
         }
 
-        protected override bool CanDelete()
+        public override bool CanDelete()
         {
             return SelectedTour != null;
         }
 
-        protected override bool CanEdit()
+        public override bool CanEdit()
         {
             return SelectedTour != null;
         }
@@ -207,7 +207,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             }
         }
 
-        protected override bool CanUpdate()
+        public override bool CanUpdate()
         {
             return SelectedTour != null &&
                    !string.IsNullOrWhiteSpace(SelectedTour.Name) &&

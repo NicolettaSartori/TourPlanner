@@ -74,7 +74,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             CloseWindow();
         }
 
-        protected override bool CanSave()
+        public override bool CanSave()
         {
             return NewTourLog != null &&
                    !string.IsNullOrWhiteSpace(NewTourLog.TotalTime) &&
@@ -82,12 +82,12 @@ namespace TourPlanner.PresentationLayer.ViewModels
                    NewTourLog.Rating != default;
         }
 
-        protected override bool CanDelete()
+        public override bool CanDelete()
         {
             return SelectedTourLog != null;
         }
 
-        protected override bool CanEdit()
+        public override bool CanEdit()
         {
             return SelectedTourLog != null;
         }
@@ -133,7 +133,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             }
         }
 
-        protected override bool CanUpdate()
+        public override bool CanUpdate()
         {
             return SelectedTourLog != null &&
                    !string.IsNullOrWhiteSpace(SelectedTourLog.TotalTime) &&

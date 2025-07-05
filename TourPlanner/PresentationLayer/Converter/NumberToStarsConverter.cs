@@ -5,7 +5,7 @@ namespace TourPlanner.PresentationLayer.Converter;
 
 public class NumberToStarsConverter : IValueConverter
 {
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object? Convert(object? value, Type? targetType, object? parameter, CultureInfo culture)
     {
         if (value is int number)
         {
@@ -14,7 +14,7 @@ public class NumberToStarsConverter : IValueConverter
         return value;
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo culture)
     {
         return value;
     }

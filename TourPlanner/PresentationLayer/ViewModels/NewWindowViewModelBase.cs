@@ -36,8 +36,8 @@ public abstract class NewWindowViewModelBase: ViewModelBase
     protected abstract void DeleteItem();
     protected abstract void EditItem();
     protected abstract void UpdateItem();
-    protected abstract bool CanSave();
-    protected abstract bool CanDelete();
-    protected abstract bool CanEdit();
-    protected abstract bool CanUpdate();
+    public abstract bool CanSave();
+    public abstract bool CanDelete();
+    public abstract bool CanEdit();
+    public abstract bool CanUpdate();
 }
