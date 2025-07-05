@@ -34,6 +34,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
         private readonly TourService _service = new();
         
         public ICommand ExportCommand { get; }
+        public ICommand RandomCommand { get; }
 
         public Tour? SelectedTour
         {
@@ -69,6 +70,7 @@ namespace TourPlanner.PresentationLayer.ViewModels
             _tourLogsViewModel.TourViewModel = this;
             
             ExportCommand = new RelayCommand(_ => ExportItem());
+            RandomCommand = new RelayCommand(_ => GetRandomItem());
 
             Tours = new ObservableCollection<Tour>(_service.GetTours());
 
@@ -222,6 +224,13 @@ namespace TourPlanner.PresentationLayer.ViewModels
                 return;
 
             _service.ExportTour(SelectedTour);
+        }
+
+        private void GetRandomItem()
+        {
+            Tour? randomTour = Tours?[new Random().Next(0, Tours.Count)];
+            if (randomTour != null)
+                SelectedTour = randomTour;
         }
 
         protected override void CloseWindow()

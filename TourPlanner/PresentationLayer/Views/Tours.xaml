@@ -9,6 +9,14 @@
              d:DataContext="{d:DesignInstance Type=vm:TourViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="350" d:DesignWidth="250">
     
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Background" Value="#e0edff"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </UserControl.Resources>
+    
     <TabControl Style="{StaticResource TabControlWithButtons}">
         <TabItem Header="Tours">
             <Border Margin="8" BorderBrush="LightGray" BorderThickness="1">
@@ -36,7 +44,9 @@
                     </ListView>
             
                     <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 1 0 0">
-                        <TextBlock Text="Vestibulum at eros" HorizontalAlignment="Center" Padding="5" Foreground="Black"/>
+                        <Button Content="Select random tour"
+                                Command="{Binding RandomCommand}"
+                                HorizontalAlignment="Center" />
                     </Border>
                 </Grid>
             </Border>
